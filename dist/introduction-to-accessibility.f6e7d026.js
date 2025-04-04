@@ -1,722 +1,19 @@
-// modules are defined as an array
-// [ module function, map of requires ]
-//
-// map of requires is short require name -> numeric require
-//
-// anything defined in a previous bundle is accessed via the
-// orig method which is the require for previous bundles
 
-(function (
-  modules,
-  entry,
-  mainEntry,
-  parcelRequireName,
-  distDir,
-  publicUrl,
-  devServer
-) {
-  /* eslint-disable no-undef */
-  var globalObject =
-    typeof globalThis !== 'undefined'
-      ? globalThis
-      : typeof self !== 'undefined'
-      ? self
-      : typeof window !== 'undefined'
-      ? window
-      : typeof global !== 'undefined'
-      ? global
-      : {};
-  /* eslint-enable no-undef */
-
-  // Save the require from previous bundle to this closure if any
-  var previousRequire =
-    typeof globalObject[parcelRequireName] === 'function' &&
-    globalObject[parcelRequireName];
-
-  var importMap = previousRequire.i || {};
-  var cache = previousRequire.cache || {};
-  // Do not use `require` to prevent Webpack from trying to bundle this call
-  var nodeRequire =
-    typeof module !== 'undefined' &&
-    typeof module.require === 'function' &&
-    module.require.bind(module);
-
-  function newRequire(name, jumped) {
-    if (!cache[name]) {
-      if (!modules[name]) {
-        // if we cannot find the module within our internal map or
-        // cache jump to the current global require ie. the last bundle
-        // that was added to the page.
-        var currentRequire =
-          typeof globalObject[parcelRequireName] === 'function' &&
-          globalObject[parcelRequireName];
-        if (!jumped && currentRequire) {
-          return currentRequire(name, true);
-        }
-
-        // If there are other bundles on this page the require from the
-        // previous one is saved to 'previousRequire'. Repeat this as
-        // many times as there are bundles until the module is found or
-        // we exhaust the require chain.
-        if (previousRequire) {
-          return previousRequire(name, true);
-        }
-
-        // Try the node require function if it exists.
-        if (nodeRequire && typeof name === 'string') {
-          return nodeRequire(name);
-        }
-
-        var err = new Error("Cannot find module '" + name + "'");
-        err.code = 'MODULE_NOT_FOUND';
-        throw err;
-      }
-
-      localRequire.resolve = resolve;
-      localRequire.cache = {};
-
-      var module = (cache[name] = new newRequire.Module(name));
-
-      modules[name][0].call(
-        module.exports,
-        localRequire,
-        module,
-        module.exports,
-        globalObject
-      );
-    }
-
-    return cache[name].exports;
-
-    function localRequire(x) {
-      var res = localRequire.resolve(x);
-      return res === false ? {} : newRequire(res);
-    }
-
-    function resolve(x) {
-      var id = modules[name][1][x];
-      return id != null ? id : x;
-    }
-  }
-
-  function Module(moduleName) {
-    this.id = moduleName;
-    this.bundle = newRequire;
-    this.require = nodeRequire;
-    this.exports = {};
-  }
-
-  newRequire.isParcelRequire = true;
-  newRequire.Module = Module;
-  newRequire.modules = modules;
-  newRequire.cache = cache;
-  newRequire.parent = previousRequire;
-  newRequire.distDir = distDir;
-  newRequire.publicUrl = publicUrl;
-  newRequire.devServer = devServer;
-  newRequire.i = importMap;
-  newRequire.register = function (id, exports) {
-    modules[id] = [
-      function (require, module) {
-        module.exports = exports;
-      },
-      {},
-    ];
-  };
-
-  // Only insert newRequire.load when it is actually used.
-  // The code in this file is linted against ES5, so dynamic import is not allowed.
-  // INSERT_LOAD_HERE
-
-  Object.defineProperty(newRequire, 'root', {
-    get: function () {
-      return globalObject[parcelRequireName];
-    },
-  });
-
-  globalObject[parcelRequireName] = newRequire;
-
-  for (var i = 0; i < entry.length; i++) {
-    newRequire(entry[i]);
-  }
-
-  if (mainEntry) {
-    // Expose entry point to Node, AMD or browser globals
-    // Based on https://github.com/ForbesLindesay/umd/blob/master/template.js
-    var mainExports = newRequire(mainEntry);
-
-    // CommonJS
-    if (typeof exports === 'object' && typeof module !== 'undefined') {
-      module.exports = mainExports;
-
-      // RequireJS
-    } else if (typeof define === 'function' && define.amd) {
-      define(function () {
-        return mainExports;
-      });
-    }
-  }
-})({"9WRFA":[function(require,module,exports,__globalThis) {
-var global = arguments[3];
-var HMR_HOST = null;
-var HMR_PORT = null;
-var HMR_SERVER_PORT = 6001;
-var HMR_SECURE = false;
-var HMR_ENV_HASH = "439701173a9199ea";
-var HMR_USE_SSE = false;
-module.bundle.HMR_BUNDLE_ID = "17677af8c6396971";
-"use strict";
-/* global HMR_HOST, HMR_PORT, HMR_SERVER_PORT, HMR_ENV_HASH, HMR_SECURE, HMR_USE_SSE, chrome, browser, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
-import type {
-  HMRAsset,
-  HMRMessage,
-} from '@parcel/reporter-dev-server/src/HMRServer.js';
-interface ParcelRequire {
-  (string): mixed;
-  cache: {|[string]: ParcelModule|};
-  hotData: {|[string]: mixed|};
-  Module: any;
-  parent: ?ParcelRequire;
-  isParcelRequire: true;
-  modules: {|[string]: [Function, {|[string]: string|}]|};
-  HMR_BUNDLE_ID: string;
-  root: ParcelRequire;
+function $parcel$interopDefault(a) {
+  return a && a.__esModule ? a.default : a;
 }
-interface ParcelModule {
-  hot: {|
-    data: mixed,
-    accept(cb: (Function) => void): void,
-    dispose(cb: (mixed) => void): void,
-    // accept(deps: Array<string> | string, cb: (Function) => void): void,
-    // decline(): void,
-    _acceptCallbacks: Array<(Function) => void>,
-    _disposeCallbacks: Array<(mixed) => void>,
-  |};
-}
-interface ExtensionContext {
-  runtime: {|
-    reload(): void,
-    getURL(url: string): string;
-    getManifest(): {manifest_version: number, ...};
-  |};
-}
-declare var module: {bundle: ParcelRequire, ...};
-declare var HMR_HOST: string;
-declare var HMR_PORT: string;
-declare var HMR_SERVER_PORT: string;
-declare var HMR_ENV_HASH: string;
-declare var HMR_SECURE: boolean;
-declare var HMR_USE_SSE: boolean;
-declare var chrome: ExtensionContext;
-declare var browser: ExtensionContext;
-declare var __parcel__import__: (string) => Promise<void>;
-declare var __parcel__importScripts__: (string) => Promise<void>;
-declare var globalThis: typeof self;
-declare var ServiceWorkerGlobalScope: Object;
-*/ var OVERLAY_ID = '__parcel__error__overlay__';
-var OldModule = module.bundle.Module;
-function Module(moduleName) {
-    OldModule.call(this, moduleName);
-    this.hot = {
-        data: module.bundle.hotData[moduleName],
-        _acceptCallbacks: [],
-        _disposeCallbacks: [],
-        accept: function(fn) {
-            this._acceptCallbacks.push(fn || function() {});
-        },
-        dispose: function(fn) {
-            this._disposeCallbacks.push(fn);
-        }
-    };
-    module.bundle.hotData[moduleName] = undefined;
-}
-module.bundle.Module = Module;
-module.bundle.hotData = {};
-var checkedAssets /*: {|[string]: boolean|} */ , disposedAssets /*: {|[string]: boolean|} */ , assetsToDispose /*: Array<[ParcelRequire, string]> */ , assetsToAccept /*: Array<[ParcelRequire, string]> */ , bundleNotFound = false;
-function getHostname() {
-    return HMR_HOST || (typeof location !== 'undefined' && location.protocol.indexOf('http') === 0 ? location.hostname : 'localhost');
-}
-function getPort() {
-    return HMR_PORT || (typeof location !== 'undefined' ? location.port : HMR_SERVER_PORT);
-}
-// eslint-disable-next-line no-redeclare
-let WebSocket = globalThis.WebSocket;
-if (!WebSocket && typeof module.bundle.root === 'function') try {
-    // eslint-disable-next-line no-global-assign
-    WebSocket = module.bundle.root('ws');
-} catch  {
-// ignore.
-}
-var hostname = getHostname();
-var port = getPort();
-var protocol = HMR_SECURE || typeof location !== 'undefined' && location.protocol === 'https:' && ![
-    'localhost',
-    '127.0.0.1',
-    '0.0.0.0'
-].includes(hostname) ? 'wss' : 'ws';
-// eslint-disable-next-line no-redeclare
-var parent = module.bundle.parent;
-if (!parent || !parent.isParcelRequire) {
-    // Web extension context
-    var extCtx = typeof browser === 'undefined' ? typeof chrome === 'undefined' ? null : chrome : browser;
-    // Safari doesn't support sourceURL in error stacks.
-    // eval may also be disabled via CSP, so do a quick check.
-    var supportsSourceURL = false;
-    try {
-        (0, eval)('throw new Error("test"); //# sourceURL=test.js');
-    } catch (err) {
-        supportsSourceURL = err.stack.includes('test.js');
-    }
-    var ws;
-    if (HMR_USE_SSE) ws = new EventSource('/__parcel_hmr');
-    else try {
-        // If we're running in the dev server's node runner, listen for messages on the parent port.
-        let { workerData, parentPort } = module.bundle.root('node:worker_threads') /*: any*/ ;
-        if (workerData !== null && workerData !== void 0 && workerData.__parcel) {
-            parentPort.on('message', async (message)=>{
-                try {
-                    await handleMessage(message);
-                    parentPort.postMessage('updated');
-                } catch  {
-                    parentPort.postMessage('restart');
-                }
-            });
-            // After the bundle has finished running, notify the dev server that the HMR update is complete.
-            queueMicrotask(()=>parentPort.postMessage('ready'));
-        }
-    } catch  {
-        if (typeof WebSocket !== 'undefined') try {
-            ws = new WebSocket(protocol + '://' + hostname + (port ? ':' + port : '') + '/');
-        } catch (err) {
-            if (err.message) console.error(err.message);
-        }
-    }
-    if (ws) {
-        // $FlowFixMe
-        ws.onmessage = async function(event /*: {data: string, ...} */ ) {
-            var data /*: HMRMessage */  = JSON.parse(event.data);
-            await handleMessage(data);
-        };
-        if (ws instanceof WebSocket) {
-            ws.onerror = function(e) {
-                if (e.message) console.error(e.message);
-            };
-            ws.onclose = function() {
-                console.warn("[parcel] \uD83D\uDEA8 Connection to the HMR server was lost");
-            };
-        }
-    }
-}
-async function handleMessage(data /*: HMRMessage */ ) {
-    checkedAssets = {} /*: {|[string]: boolean|} */ ;
-    disposedAssets = {} /*: {|[string]: boolean|} */ ;
-    assetsToAccept = [];
-    assetsToDispose = [];
-    bundleNotFound = false;
-    if (data.type === 'reload') fullReload();
-    else if (data.type === 'update') {
-        // Remove error overlay if there is one
-        if (typeof document !== 'undefined') removeErrorOverlay();
-        let assets = data.assets;
-        // Handle HMR Update
-        let handled = assets.every((asset)=>{
-            return asset.type === 'css' || asset.type === 'js' && hmrAcceptCheck(module.bundle.root, asset.id, asset.depsByBundle);
-        });
-        // Dispatch a custom event in case a bundle was not found. This might mean
-        // an asset on the server changed and we should reload the page. This event
-        // gives the client an opportunity to refresh without losing state
-        // (e.g. via React Server Components). If e.preventDefault() is not called,
-        // we will trigger a full page reload.
-        if (handled && bundleNotFound && assets.some((a)=>a.envHash !== HMR_ENV_HASH) && typeof window !== 'undefined' && typeof CustomEvent !== 'undefined') handled = !window.dispatchEvent(new CustomEvent('parcelhmrreload', {
-            cancelable: true
-        }));
-        if (handled) {
-            console.clear();
-            // Dispatch custom event so other runtimes (e.g React Refresh) are aware.
-            if (typeof window !== 'undefined' && typeof CustomEvent !== 'undefined') window.dispatchEvent(new CustomEvent('parcelhmraccept'));
-            await hmrApplyUpdates(assets);
-            hmrDisposeQueue();
-            // Run accept callbacks. This will also re-execute other disposed assets in topological order.
-            let processedAssets = {};
-            for(let i = 0; i < assetsToAccept.length; i++){
-                let id = assetsToAccept[i][1];
-                if (!processedAssets[id]) {
-                    hmrAccept(assetsToAccept[i][0], id);
-                    processedAssets[id] = true;
-                }
-            }
-        } else fullReload();
-    }
-    if (data.type === 'error') {
-        // Log parcel errors to console
-        for (let ansiDiagnostic of data.diagnostics.ansi){
-            let stack = ansiDiagnostic.codeframe ? ansiDiagnostic.codeframe : ansiDiagnostic.stack;
-            console.error("\uD83D\uDEA8 [parcel]: " + ansiDiagnostic.message + '\n' + stack + '\n\n' + ansiDiagnostic.hints.join('\n'));
-        }
-        if (typeof document !== 'undefined') {
-            // Render the fancy html overlay
-            removeErrorOverlay();
-            var overlay = createErrorOverlay(data.diagnostics.html);
-            // $FlowFixMe
-            document.body.appendChild(overlay);
-        }
-    }
-}
-function removeErrorOverlay() {
-    var overlay = document.getElementById(OVERLAY_ID);
-    if (overlay) {
-        overlay.remove();
-        console.log("[parcel] \u2728 Error resolved");
-    }
-}
-function createErrorOverlay(diagnostics) {
-    var overlay = document.createElement('div');
-    overlay.id = OVERLAY_ID;
-    let errorHTML = '<div style="background: black; opacity: 0.85; font-size: 16px; color: white; position: fixed; height: 100%; width: 100%; top: 0px; left: 0px; padding: 30px; font-family: Menlo, Consolas, monospace; z-index: 9999;">';
-    for (let diagnostic of diagnostics){
-        let stack = diagnostic.frames.length ? diagnostic.frames.reduce((p, frame)=>{
-            return `${p}
-<a href="${protocol === 'wss' ? 'https' : 'http'}://${hostname}:${port}/__parcel_launch_editor?file=${encodeURIComponent(frame.location)}" style="text-decoration: underline; color: #888" onclick="fetch(this.href); return false">${frame.location}</a>
-${frame.code}`;
-        }, '') : diagnostic.stack;
-        errorHTML += `
-      <div>
-        <div style="font-size: 18px; font-weight: bold; margin-top: 20px;">
-          \u{1F6A8} ${diagnostic.message}
-        </div>
-        <pre>${stack}</pre>
-        <div>
-          ${diagnostic.hints.map((hint)=>"<div>\uD83D\uDCA1 " + hint + '</div>').join('')}
-        </div>
-        ${diagnostic.documentation ? `<div>\u{1F4DD} <a style="color: violet" href="${diagnostic.documentation}" target="_blank">Learn more</a></div>` : ''}
-      </div>
-    `;
-    }
-    errorHTML += '</div>';
-    overlay.innerHTML = errorHTML;
-    return overlay;
-}
-function fullReload() {
-    if (typeof location !== 'undefined' && 'reload' in location) location.reload();
-    else if (typeof extCtx !== 'undefined' && extCtx && extCtx.runtime && extCtx.runtime.reload) extCtx.runtime.reload();
-    else try {
-        let { workerData, parentPort } = module.bundle.root('node:worker_threads') /*: any*/ ;
-        if (workerData !== null && workerData !== void 0 && workerData.__parcel) parentPort.postMessage('restart');
-    } catch (err) {
-        console.error("[parcel] \u26A0\uFE0F An HMR update was not accepted. Please restart the process.");
-    }
-}
-function getParents(bundle, id) /*: Array<[ParcelRequire, string]> */ {
-    var modules = bundle.modules;
-    if (!modules) return [];
-    var parents = [];
-    var k, d, dep;
-    for(k in modules)for(d in modules[k][1]){
-        dep = modules[k][1][d];
-        if (dep === id || Array.isArray(dep) && dep[dep.length - 1] === id) parents.push([
-            bundle,
-            k
-        ]);
-    }
-    if (bundle.parent) parents = parents.concat(getParents(bundle.parent, id));
-    return parents;
-}
-function updateLink(link) {
-    var href = link.getAttribute('href');
-    if (!href) return;
-    var newLink = link.cloneNode();
-    newLink.onload = function() {
-        if (link.parentNode !== null) // $FlowFixMe
-        link.parentNode.removeChild(link);
-    };
-    newLink.setAttribute('href', // $FlowFixMe
-    href.split('?')[0] + '?' + Date.now());
-    // $FlowFixMe
-    link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-var cssTimeout = null;
-function reloadCSS() {
-    if (cssTimeout || typeof document === 'undefined') return;
-    cssTimeout = setTimeout(function() {
-        var links = document.querySelectorAll('link[rel="stylesheet"]');
-        for(var i = 0; i < links.length; i++){
-            // $FlowFixMe[incompatible-type]
-            var href /*: string */  = links[i].getAttribute('href');
-            var hostname = getHostname();
-            var servedFromHMRServer = hostname === 'localhost' ? new RegExp('^(https?:\\/\\/(0.0.0.0|127.0.0.1)|localhost):' + getPort()).test(href) : href.indexOf(hostname + ':' + getPort());
-            var absolute = /^https?:\/\//i.test(href) && href.indexOf(location.origin) !== 0 && !servedFromHMRServer;
-            if (!absolute) updateLink(links[i]);
-        }
-        cssTimeout = null;
-    }, 50);
-}
-function hmrDownload(asset) {
-    if (asset.type === 'js') {
-        if (typeof document !== 'undefined') {
-            let script = document.createElement('script');
-            script.src = asset.url + '?t=' + Date.now();
-            if (asset.outputFormat === 'esmodule') script.type = 'module';
-            return new Promise((resolve, reject)=>{
-                var _document$head;
-                script.onload = ()=>resolve(script);
-                script.onerror = reject;
-                (_document$head = document.head) === null || _document$head === void 0 || _document$head.appendChild(script);
-            });
-        } else if (typeof importScripts === 'function') {
-            // Worker scripts
-            if (asset.outputFormat === 'esmodule') return import(asset.url + '?t=' + Date.now());
-            else return new Promise((resolve, reject)=>{
-                try {
-                    importScripts(asset.url + '?t=' + Date.now());
-                    resolve();
-                } catch (err) {
-                    reject(err);
-                }
-            });
-        }
-    }
-}
-async function hmrApplyUpdates(assets) {
-    global.parcelHotUpdate = Object.create(null);
-    let scriptsToRemove;
-    try {
-        // If sourceURL comments aren't supported in eval, we need to load
-        // the update from the dev server over HTTP so that stack traces
-        // are correct in errors/logs. This is much slower than eval, so
-        // we only do it if needed (currently just Safari).
-        // https://bugs.webkit.org/show_bug.cgi?id=137297
-        // This path is also taken if a CSP disallows eval.
-        if (!supportsSourceURL) {
-            let promises = assets.map((asset)=>{
-                var _hmrDownload;
-                return (_hmrDownload = hmrDownload(asset)) === null || _hmrDownload === void 0 ? void 0 : _hmrDownload.catch((err)=>{
-                    // Web extension fix
-                    if (extCtx && extCtx.runtime && extCtx.runtime.getManifest().manifest_version == 3 && typeof ServiceWorkerGlobalScope != 'undefined' && global instanceof ServiceWorkerGlobalScope) {
-                        extCtx.runtime.reload();
-                        return;
-                    }
-                    throw err;
-                });
-            });
-            scriptsToRemove = await Promise.all(promises);
-        }
-        assets.forEach(function(asset) {
-            hmrApply(module.bundle.root, asset);
-        });
-    } finally{
-        delete global.parcelHotUpdate;
-        if (scriptsToRemove) scriptsToRemove.forEach((script)=>{
-            if (script) {
-                var _document$head2;
-                (_document$head2 = document.head) === null || _document$head2 === void 0 || _document$head2.removeChild(script);
-            }
-        });
-    }
-}
-function hmrApply(bundle /*: ParcelRequire */ , asset /*:  HMRAsset */ ) {
-    var modules = bundle.modules;
-    if (!modules) return;
-    if (asset.type === 'css') reloadCSS();
-    else if (asset.type === 'js') {
-        let deps = asset.depsByBundle[bundle.HMR_BUNDLE_ID];
-        if (deps) {
-            if (modules[asset.id]) {
-                // Remove dependencies that are removed and will become orphaned.
-                // This is necessary so that if the asset is added back again, the cache is gone, and we prevent a full page reload.
-                let oldDeps = modules[asset.id][1];
-                for(let dep in oldDeps)if (!deps[dep] || deps[dep] !== oldDeps[dep]) {
-                    let id = oldDeps[dep];
-                    let parents = getParents(module.bundle.root, id);
-                    if (parents.length === 1) hmrDelete(module.bundle.root, id);
-                }
-            }
-            if (supportsSourceURL) // Global eval. We would use `new Function` here but browser
-            // support for source maps is better with eval.
-            (0, eval)(asset.output);
-            // $FlowFixMe
-            let fn = global.parcelHotUpdate[asset.id];
-            modules[asset.id] = [
-                fn,
-                deps
-            ];
-        }
-        // Always traverse to the parent bundle, even if we already replaced the asset in this bundle.
-        // This is required in case modules are duplicated. We need to ensure all instances have the updated code.
-        if (bundle.parent) hmrApply(bundle.parent, asset);
-    }
-}
-function hmrDelete(bundle, id) {
-    let modules = bundle.modules;
-    if (!modules) return;
-    if (modules[id]) {
-        // Collect dependencies that will become orphaned when this module is deleted.
-        let deps = modules[id][1];
-        let orphans = [];
-        for(let dep in deps){
-            let parents = getParents(module.bundle.root, deps[dep]);
-            if (parents.length === 1) orphans.push(deps[dep]);
-        }
-        // Delete the module. This must be done before deleting dependencies in case of circular dependencies.
-        delete modules[id];
-        delete bundle.cache[id];
-        // Now delete the orphans.
-        orphans.forEach((id)=>{
-            hmrDelete(module.bundle.root, id);
-        });
-    } else if (bundle.parent) hmrDelete(bundle.parent, id);
-}
-function hmrAcceptCheck(bundle /*: ParcelRequire */ , id /*: string */ , depsByBundle /*: ?{ [string]: { [string]: string } }*/ ) {
-    checkedAssets = {};
-    if (hmrAcceptCheckOne(bundle, id, depsByBundle)) return true;
-    // Traverse parents breadth first. All possible ancestries must accept the HMR update, or we'll reload.
-    let parents = getParents(module.bundle.root, id);
-    let accepted = false;
-    while(parents.length > 0){
-        let v = parents.shift();
-        let a = hmrAcceptCheckOne(v[0], v[1], null);
-        if (a) // If this parent accepts, stop traversing upward, but still consider siblings.
-        accepted = true;
-        else if (a !== null) {
-            // Otherwise, queue the parents in the next level upward.
-            let p = getParents(module.bundle.root, v[1]);
-            if (p.length === 0) {
-                // If there are no parents, then we've reached an entry without accepting. Reload.
-                accepted = false;
-                break;
-            }
-            parents.push(...p);
-        }
-    }
-    return accepted;
-}
-function hmrAcceptCheckOne(bundle /*: ParcelRequire */ , id /*: string */ , depsByBundle /*: ?{ [string]: { [string]: string } }*/ ) {
-    var modules = bundle.modules;
-    if (!modules) return;
-    if (depsByBundle && !depsByBundle[bundle.HMR_BUNDLE_ID]) {
-        // If we reached the root bundle without finding where the asset should go,
-        // there's nothing to do. Mark as "accepted" so we don't reload the page.
-        if (!bundle.parent) {
-            bundleNotFound = true;
-            return true;
-        }
-        return hmrAcceptCheckOne(bundle.parent, id, depsByBundle);
-    }
-    if (checkedAssets[id]) return null;
-    checkedAssets[id] = true;
-    var cached = bundle.cache[id];
-    if (!cached) return true;
-    assetsToDispose.push([
-        bundle,
-        id
-    ]);
-    if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
-        assetsToAccept.push([
-            bundle,
-            id
-        ]);
-        return true;
-    }
-    return false;
-}
-function hmrDisposeQueue() {
-    // Dispose all old assets.
-    for(let i = 0; i < assetsToDispose.length; i++){
-        let id = assetsToDispose[i][1];
-        if (!disposedAssets[id]) {
-            hmrDispose(assetsToDispose[i][0], id);
-            disposedAssets[id] = true;
-        }
-    }
-    assetsToDispose = [];
-}
-function hmrDispose(bundle /*: ParcelRequire */ , id /*: string */ ) {
-    var cached = bundle.cache[id];
-    bundle.hotData[id] = {};
-    if (cached && cached.hot) cached.hot.data = bundle.hotData[id];
-    if (cached && cached.hot && cached.hot._disposeCallbacks.length) cached.hot._disposeCallbacks.forEach(function(cb) {
-        cb(bundle.hotData[id]);
-    });
-    delete bundle.cache[id];
-}
-function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
-    // Execute the module.
-    bundle(id);
-    // Run the accept callbacks in the new version of the module.
-    var cached = bundle.cache[id];
-    if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
-        let assetsToAlsoAccept = [];
-        cached.hot._acceptCallbacks.forEach(function(cb) {
-            let additionalAssets = cb(function() {
-                return getParents(module.bundle.root, id);
-            });
-            if (Array.isArray(additionalAssets) && additionalAssets.length) assetsToAlsoAccept.push(...additionalAssets);
-        });
-        if (assetsToAlsoAccept.length) {
-            let handled = assetsToAlsoAccept.every(function(a) {
-                return hmrAcceptCheck(a[0], a[1]);
-            });
-            if (!handled) return fullReload();
-            hmrDisposeQueue();
-        }
-    }
-}
-
-},{}],"8JWvp":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-var _revealJs = require("reveal.js");
-var _revealJsDefault = parcelHelpers.interopDefault(_revealJs);
-var _notes = require("reveal.js/plugin/notes/notes");
-var _notesDefault = parcelHelpers.interopDefault(_notes);
-var _highlight = require("reveal.js/plugin/highlight/highlight");
-var _highlightDefault = parcelHelpers.interopDefault(_highlight);
-var _diveIn = require("./_dive-in");
-// reveal.js initialization
-const slides = (0, _revealJsDefault.default)({
-    plugins: [
-        (0, _notesDefault.default),
-        (0, _highlightDefault.default)
-    ],
-    // highlight.js options
-    highlight: {
-        highlightOnLoad: true,
-        tabReplace: '  '
-    },
-    navigationMode: 'linear',
-    ...window.location.href.includes('?print-pdf') && {
-        pdfSeparateFragments: false
-    },
-    hash: true,
-    // Flags if we should monitor the hash and change slides accordingly
-    respondToHashChanges: true,
-    // Push each slide change to the browser history.  Implies `hash: true`
-    history: true
-});
-// keyboard interaction configuration
-slides.configure({
-    keyboard: {
-        8: 'prev',
-        // 27: null,
-        78: null
-    }
-});
-slides.initialize();
-
-},{"reveal.js":"ggiYs","reveal.js/plugin/notes/notes":"3xbDK","reveal.js/plugin/highlight/highlight":"9OwLp","./_dive-in":"lmKh2","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"ggiYs":[function(require,module,exports,__globalThis) {
 /*!
- * reveal.js 5.1.0
+ * reveal.js 5.2.0
  * https://revealjs.com
  * MIT licensed
  *
  * Copyright (C) 2011-2024 Hakim El Hattab, https://hakim.se
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>X);
-const e = (e, t)=>{
+ */ const $ef6d0cb1bf5eee6a$var$e = (e, t)=>{
     for(let i in t)e[i] = t[i];
     return e;
-}, t = (e, t)=>Array.from(e.querySelectorAll(t)), i = (e, t, i)=>{
+}, $ef6d0cb1bf5eee6a$var$t = (e, t)=>Array.from(e.querySelectorAll(t)), $ef6d0cb1bf5eee6a$var$i = (e, t, i)=>{
     i ? e.classList.add(t) : e.classList.remove(t);
-}, s = (e)=>{
+}, $ef6d0cb1bf5eee6a$var$s = (e)=>{
     if ("string" == typeof e) {
         if ("null" === e) return null;
         if ("true" === e) return !0;
@@ -724,42 +21,42 @@ const e = (e, t)=>{
         if (e.match(/^-?[\d\.]+$/)) return parseFloat(e);
     }
     return e;
-}, a = (e, t)=>{
+}, $ef6d0cb1bf5eee6a$var$a = (e, t)=>{
     e.style.transform = t;
-}, n = (e, t)=>{
+}, $ef6d0cb1bf5eee6a$var$n = (e, t)=>{
     let i = e.matches || e.matchesSelector || e.msMatchesSelector;
     return !(!i || !i.call(e, t));
-}, r = (e, t)=>{
+}, $ef6d0cb1bf5eee6a$var$r = (e, t)=>{
     if ("function" == typeof e.closest) return e.closest(t);
     for(; e;){
-        if (n(e, t)) return e;
+        if ($ef6d0cb1bf5eee6a$var$n(e, t)) return e;
         e = e.parentNode;
     }
     return null;
-}, o = (e)=>{
+}, $ef6d0cb1bf5eee6a$var$o = (e)=>{
     let t = (e = e || document.documentElement).requestFullscreen || e.webkitRequestFullscreen || e.webkitRequestFullScreen || e.mozRequestFullScreen || e.msRequestFullscreen;
     t && t.apply(e);
-}, l = (e)=>{
+}, $ef6d0cb1bf5eee6a$var$l = (e)=>{
     let t = document.createElement("style");
     return t.type = "text/css", e && e.length > 0 && (t.styleSheet ? t.styleSheet.cssText = e : t.appendChild(document.createTextNode(e))), document.head.appendChild(t), t;
-}, d = ()=>{
+}, $ef6d0cb1bf5eee6a$var$d = ()=>{
     let e = {};
     location.search.replace(/[A-Z0-9]+?=([\w\.%-]*)/gi, (t)=>{
         e[t.split("=").shift()] = t.split("=").pop();
     });
     for(let t in e){
         let i = e[t];
-        e[t] = s(unescape(i));
+        e[t] = $ef6d0cb1bf5eee6a$var$s(unescape(i));
     }
     return void 0 !== e.dependencies && delete e.dependencies, e;
-}, c = {
+}, $ef6d0cb1bf5eee6a$var$c = {
     mp4: "video/mp4",
     m4a: "video/mp4",
     ogv: "video/ogg",
     mpeg: "video/mpeg",
     webm: "video/webm"
-}, h = navigator.userAgent, u = /(iphone|ipod|ipad|android)/gi.test(h) || "MacIntel" === navigator.platform && navigator.maxTouchPoints > 1, g = /android/gi.test(h);
-var v = function(e) {
+}, $ef6d0cb1bf5eee6a$var$h = navigator.userAgent, $ef6d0cb1bf5eee6a$var$u = /(iphone|ipod|ipad|android)/gi.test($ef6d0cb1bf5eee6a$var$h) || "MacIntel" === navigator.platform && navigator.maxTouchPoints > 1, $ef6d0cb1bf5eee6a$var$g = /android/gi.test($ef6d0cb1bf5eee6a$var$h);
+var $ef6d0cb1bf5eee6a$var$v = function(e) {
     if (e) {
         var t = function(e) {
             return [].slice.call(e);
@@ -880,7 +177,7 @@ var v = function(e) {
         ], i)[0];
     }
 }("undefined" == typeof window ? null : window);
-class p {
+class $ef6d0cb1bf5eee6a$var$p {
     constructor(e){
         this.Reveal = e, this.startEmbeddedIframe = this.startEmbeddedIframe.bind(this);
     }
@@ -890,13 +187,13 @@ class p {
         return "boolean" != typeof t && (t = e.hasAttribute("data-preload")), t;
     }
     load(e, i = {}) {
-        e.style.display = this.Reveal.getConfig().display, t(e, "img[data-src], video[data-src], audio[data-src], iframe[data-src]").forEach((e)=>{
+        e.style.display = this.Reveal.getConfig().display, $ef6d0cb1bf5eee6a$var$t(e, "img[data-src], video[data-src], audio[data-src], iframe[data-src]").forEach((e)=>{
             ("IFRAME" !== e.tagName || this.shouldPreload(e)) && (e.setAttribute("src", e.getAttribute("data-src")), e.setAttribute("data-lazy-loaded", ""), e.removeAttribute("data-src"));
-        }), t(e, "video, audio").forEach((e)=>{
+        }), $ef6d0cb1bf5eee6a$var$t(e, "video, audio").forEach((e)=>{
             let i = 0;
-            t(e, "source[data-src]").forEach((e)=>{
+            $ef6d0cb1bf5eee6a$var$t(e, "source[data-src]").forEach((e)=>{
                 e.setAttribute("src", e.getAttribute("data-src")), e.removeAttribute("data-src"), e.setAttribute("data-lazy-loaded", ""), i += 1;
-            }), u && "VIDEO" === e.tagName && e.setAttribute("playsinline", ""), i > 0 && e.load();
+            }), $ef6d0cb1bf5eee6a$var$u && "VIDEO" === e.tagName && e.setAttribute("playsinline", ""), i > 0 && e.load();
         });
         let s = e.slideBackgroundElement;
         if (s) {
@@ -908,10 +205,10 @@ class p {
                 if (n) /^data:/.test(n.trim()) ? t.style.backgroundImage = `url(${n.trim()})` : t.style.backgroundImage = n.split(",").map((e)=>`url(${((e = "")=>encodeURI(e).replace(/%5B/g, "[").replace(/%5D/g, "]").replace(/[!'()*]/g, (e)=>`%${e.charCodeAt(0).toString(16).toUpperCase()}`))(decodeURI(e.trim()))})`).join(",");
                 else if (r) {
                     let e = document.createElement("video");
-                    o && e.setAttribute("loop", ""), (l || this.Reveal.isSpeakerNotes()) && (e.muted = !0), u && (e.muted = !0, e.setAttribute("playsinline", "")), r.split(",").forEach((t)=>{
+                    o && e.setAttribute("loop", ""), (l || this.Reveal.isSpeakerNotes()) && (e.muted = !0), $ef6d0cb1bf5eee6a$var$u && (e.muted = !0, e.setAttribute("playsinline", "")), r.split(",").forEach((t)=>{
                         const i = document.createElement("source");
                         i.setAttribute("src", t);
-                        let s = ((e = "")=>c[e.split(".").pop()])(t);
+                        let s = ((e = "")=>$ef6d0cb1bf5eee6a$var$c[e.split(".").pop()])(t);
                         s && i.setAttribute("type", s), e.appendChild(i);
                     }), t.appendChild(e);
                 } else if (a && !0 !== i.excludeIframes) {
@@ -926,7 +223,7 @@ class p {
     }
     layout(e) {
         Array.from(e.querySelectorAll(".r-fit-text")).forEach((e)=>{
-            v(e, {
+            $ef6d0cb1bf5eee6a$var$v(e, {
                 minSize: 24,
                 maxSize: .8 * this.Reveal.getConfig().height,
                 observeMutations: !1,
@@ -937,17 +234,17 @@ class p {
     unload(e) {
         e.style.display = "none";
         let i = this.Reveal.getSlideBackground(e);
-        i && (i.style.display = "none", t(i, "iframe[src]").forEach((e)=>{
+        i && (i.style.display = "none", $ef6d0cb1bf5eee6a$var$t(i, "iframe[src]").forEach((e)=>{
             e.removeAttribute("src");
-        })), t(e, "video[data-lazy-loaded][src], audio[data-lazy-loaded][src], iframe[data-lazy-loaded][src]").forEach((e)=>{
+        })), $ef6d0cb1bf5eee6a$var$t(e, "video[data-lazy-loaded][src], audio[data-lazy-loaded][src], iframe[data-lazy-loaded][src]").forEach((e)=>{
             e.setAttribute("data-src", e.getAttribute("src")), e.removeAttribute("src");
-        }), t(e, "video[data-lazy-loaded] source[src], audio source[src]").forEach((e)=>{
+        }), $ef6d0cb1bf5eee6a$var$t(e, "video[data-lazy-loaded] source[src], audio source[src]").forEach((e)=>{
             e.setAttribute("data-src", e.getAttribute("src")), e.removeAttribute("src");
         });
     }
     formatEmbeddedContent() {
         let e = (e, i, s)=>{
-            t(this.Reveal.getSlidesElement(), "iframe[" + e + '*="' + i + '"]').forEach((t)=>{
+            $ef6d0cb1bf5eee6a$var$t(this.Reveal.getSlidesElement(), "iframe[" + e + '*="' + i + '"]').forEach((t)=>{
                 let i = t.getAttribute(e);
                 i && -1 === i.indexOf(s) && t.setAttribute(e, i + (/\?/.test(i) ? "&" : "?") + s);
             });
@@ -957,17 +254,17 @@ class p {
     startEmbeddedContent(e) {
         if (e) {
             const i = this.Reveal.isSpeakerNotes();
-            t(e, 'img[src$=".gif"]').forEach((e)=>{
+            $ef6d0cb1bf5eee6a$var$t(e, 'img[src$=".gif"]').forEach((e)=>{
                 e.setAttribute("src", e.getAttribute("src"));
-            }), t(e, "video, audio").forEach((e)=>{
-                if (r(e, ".fragment") && !r(e, ".fragment.visible")) return;
+            }), $ef6d0cb1bf5eee6a$var$t(e, "video, audio").forEach((e)=>{
+                if ($ef6d0cb1bf5eee6a$var$r(e, ".fragment") && !$ef6d0cb1bf5eee6a$var$r(e, ".fragment.visible")) return;
                 let t = this.Reveal.getConfig().autoPlayMedia;
-                if ("boolean" != typeof t && (t = e.hasAttribute("data-autoplay") || !!r(e, ".slide-background")), t && "function" == typeof e.play) {
+                if ("boolean" != typeof t && (t = e.hasAttribute("data-autoplay") || !!$ef6d0cb1bf5eee6a$var$r(e, ".slide-background")), t && "function" == typeof e.play) {
                     if (i && !e.muted) return;
                     if (e.readyState > 1) this.startEmbeddedMedia({
                         target: e
                     });
-                    else if (u) {
+                    else if ($ef6d0cb1bf5eee6a$var$u) {
                         let t = e.play();
                         t && "function" == typeof t.catch && !1 === e.controls && t.catch(()=>{
                             e.controls = !0, e.addEventListener("play", ()=>{
@@ -976,47 +273,47 @@ class p {
                         });
                     } else e.removeEventListener("loadeddata", this.startEmbeddedMedia), e.addEventListener("loadeddata", this.startEmbeddedMedia);
                 }
-            }), i || (t(e, "iframe[src]").forEach((e)=>{
-                r(e, ".fragment") && !r(e, ".fragment.visible") || this.startEmbeddedIframe({
+            }), i || ($ef6d0cb1bf5eee6a$var$t(e, "iframe[src]").forEach((e)=>{
+                $ef6d0cb1bf5eee6a$var$r(e, ".fragment") && !$ef6d0cb1bf5eee6a$var$r(e, ".fragment.visible") || this.startEmbeddedIframe({
                     target: e
                 });
-            }), t(e, "iframe[data-src]").forEach((e)=>{
-                r(e, ".fragment") && !r(e, ".fragment.visible") || e.getAttribute("src") !== e.getAttribute("data-src") && (e.removeEventListener("load", this.startEmbeddedIframe), e.addEventListener("load", this.startEmbeddedIframe), e.setAttribute("src", e.getAttribute("data-src")));
+            }), $ef6d0cb1bf5eee6a$var$t(e, "iframe[data-src]").forEach((e)=>{
+                $ef6d0cb1bf5eee6a$var$r(e, ".fragment") && !$ef6d0cb1bf5eee6a$var$r(e, ".fragment.visible") || e.getAttribute("src") !== e.getAttribute("data-src") && (e.removeEventListener("load", this.startEmbeddedIframe), e.addEventListener("load", this.startEmbeddedIframe), e.setAttribute("src", e.getAttribute("data-src")));
             }));
         }
     }
     startEmbeddedMedia(e) {
-        let t = !!r(e.target, "html"), i = !!r(e.target, ".present");
+        let t = !!$ef6d0cb1bf5eee6a$var$r(e.target, "html"), i = !!$ef6d0cb1bf5eee6a$var$r(e.target, ".present");
         t && i && (e.target.paused || e.target.ended) && (e.target.currentTime = 0, e.target.play()), e.target.removeEventListener("loadeddata", this.startEmbeddedMedia);
     }
     startEmbeddedIframe(e) {
         let t = e.target;
         if (t && t.contentWindow) {
-            let i = !!r(e.target, "html"), s = !!r(e.target, ".present");
+            let i = !!$ef6d0cb1bf5eee6a$var$r(e.target, "html"), s = !!$ef6d0cb1bf5eee6a$var$r(e.target, ".present");
             if (i && s) {
                 let e = this.Reveal.getConfig().autoPlayMedia;
-                "boolean" != typeof e && (e = t.hasAttribute("data-autoplay") || !!r(t, ".slide-background")), /youtube\.com\/embed\//.test(t.getAttribute("src")) && e ? t.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', "*") : /player\.vimeo\.com\//.test(t.getAttribute("src")) && e ? t.contentWindow.postMessage('{"method":"play"}', "*") : t.contentWindow.postMessage("slide:start", "*");
+                "boolean" != typeof e && (e = t.hasAttribute("data-autoplay") || !!$ef6d0cb1bf5eee6a$var$r(t, ".slide-background")), /youtube\.com\/embed\//.test(t.getAttribute("src")) && e ? t.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', "*") : /player\.vimeo\.com\//.test(t.getAttribute("src")) && e ? t.contentWindow.postMessage('{"method":"play"}', "*") : t.contentWindow.postMessage("slide:start", "*");
             }
         }
     }
     stopEmbeddedContent(i, s = {}) {
-        s = e({
+        s = $ef6d0cb1bf5eee6a$var$e({
             unloadIframes: !0
-        }, s), i && i.parentNode && (t(i, "video, audio").forEach((e)=>{
+        }, s), i && i.parentNode && ($ef6d0cb1bf5eee6a$var$t(i, "video, audio").forEach((e)=>{
             e.hasAttribute("data-ignore") || "function" != typeof e.pause || (e.setAttribute("data-paused-by-reveal", ""), e.pause());
-        }), t(i, "iframe").forEach((e)=>{
+        }), $ef6d0cb1bf5eee6a$var$t(i, "iframe").forEach((e)=>{
             e.contentWindow && e.contentWindow.postMessage("slide:stop", "*"), e.removeEventListener("load", this.startEmbeddedIframe);
-        }), t(i, 'iframe[src*="youtube.com/embed/"]').forEach((e)=>{
+        }), $ef6d0cb1bf5eee6a$var$t(i, 'iframe[src*="youtube.com/embed/"]').forEach((e)=>{
             !e.hasAttribute("data-ignore") && e.contentWindow && "function" == typeof e.contentWindow.postMessage && e.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', "*");
-        }), t(i, 'iframe[src*="player.vimeo.com/"]').forEach((e)=>{
+        }), $ef6d0cb1bf5eee6a$var$t(i, 'iframe[src*="player.vimeo.com/"]').forEach((e)=>{
             !e.hasAttribute("data-ignore") && e.contentWindow && "function" == typeof e.contentWindow.postMessage && e.contentWindow.postMessage('{"method":"pause"}', "*");
-        }), !0 === s.unloadIframes && t(i, "iframe[data-src]").forEach((e)=>{
+        }), !0 === s.unloadIframes && $ef6d0cb1bf5eee6a$var$t(i, "iframe[data-src]").forEach((e)=>{
             e.setAttribute("src", "about:blank"), e.removeAttribute("src");
         }));
     }
 }
-const m = ".slides section", f = ".slides>section", y = ".slides>section.present>section", b = /registerPlugin|registerKeyboardShortcut|addKeyBinding|addEventListener|showPreview/;
-class w {
+const $ef6d0cb1bf5eee6a$var$m = ".slides section", $ef6d0cb1bf5eee6a$var$f = ".slides>section", $ef6d0cb1bf5eee6a$var$y = ".slides>section.present>section", $ef6d0cb1bf5eee6a$var$b = /registerPlugin|registerKeyboardShortcut|addKeyBinding|addEventListener|showPreview/;
+class $ef6d0cb1bf5eee6a$var$w {
     constructor(e){
         this.Reveal = e;
     }
@@ -1060,7 +357,7 @@ class w {
         this.element.remove();
     }
 }
-class E {
+class $ef6d0cb1bf5eee6a$var$E {
     constructor(e){
         this.Reveal = e, this.onInput = this.onInput.bind(this), this.onBlur = this.onBlur.bind(this), this.onKeyDown = this.onKeyDown.bind(this);
     }
@@ -1116,7 +413,7 @@ class E {
         setTimeout(()=>this.hide(), 1);
     }
 }
-const S = (e)=>{
+const $ef6d0cb1bf5eee6a$var$S = (e)=>{
     let t = e.match(/^#([0-9a-f]{3})$/i);
     if (t && t[1]) return t = t[1], {
         r: 17 * parseInt(t.charAt(0), 16),
@@ -1143,7 +440,7 @@ const S = (e)=>{
         a: parseFloat(a[4])
     } : null;
 };
-class R {
+class $ef6d0cb1bf5eee6a$var$R {
     constructor(e){
         this.Reveal = e;
     }
@@ -1153,7 +450,7 @@ class R {
     create() {
         this.element.innerHTML = "", this.element.classList.add("no-transition"), this.Reveal.getHorizontalSlides().forEach((e)=>{
             let i = this.createBackground(e, this.element);
-            t(e, "section").forEach((e)=>{
+            $ef6d0cb1bf5eee6a$var$t(e, "section").forEach((e)=>{
                 this.createBackground(e, i), i.classList.add("stack");
             });
         }), this.Reveal.getConfig().parallaxBackgroundImage ? (this.element.style.backgroundImage = 'url("' + this.Reveal.getConfig().parallaxBackgroundImage + '")', this.element.style.backgroundSize = this.Reveal.getConfig().parallaxBackgroundSize, this.element.style.backgroundRepeat = this.Reveal.getConfig().parallaxBackgroundRepeat, this.element.style.backgroundPosition = this.Reveal.getConfig().parallaxBackgroundPosition, setTimeout(()=>{
@@ -1187,13 +484,13 @@ class R {
     getContrastClass(e) {
         const t = e.slideBackgroundElement;
         let i = e.getAttribute("data-background-color");
-        if (!i || !S(i)) {
+        if (!i || !$ef6d0cb1bf5eee6a$var$S(i)) {
             let e = window.getComputedStyle(t);
             e && e.backgroundColor && (i = e.backgroundColor);
         }
         if (i) {
-            const e = S(i);
-            if (e && 0 !== e.a) return "string" == typeof (s = i) && (s = S(s)), (s ? (299 * s.r + 587 * s.g + 114 * s.b) / 1e3 : null) < 128 ? "has-dark-background" : "has-light-background";
+            const e = $ef6d0cb1bf5eee6a$var$S(i);
+            if (e && 0 !== e.a) return "string" == typeof (s = i) && (s = $ef6d0cb1bf5eee6a$var$S(s)), (s ? (299 * s.r + 587 * s.g + 114 * s.b) / 1e3 : null) < 128 ? "has-dark-background" : "has-light-background";
         }
         var s;
         return null;
@@ -1209,7 +506,7 @@ class R {
     update(e = !1) {
         let i = this.Reveal.getConfig(), s = this.Reveal.getCurrentSlide(), a = this.Reveal.getIndices(), n = null, r = i.rtl ? "future" : "past", o = i.rtl ? "past" : "future";
         if (Array.from(this.element.childNodes).forEach((i, s)=>{
-            i.classList.remove("past", "present", "future"), s < a.h ? i.classList.add(r) : s > a.h ? i.classList.add(o) : (i.classList.add("present"), n = i), (e || s === a.h) && t(i, ".slide-background").forEach((e, t)=>{
+            i.classList.remove("past", "present", "future"), s < a.h ? i.classList.add(r) : s > a.h ? i.classList.add(o) : (i.classList.add("present"), n = i), (e || s === a.h) && $ef6d0cb1bf5eee6a$var$t(i, ".slide-background").forEach((e, t)=>{
                 e.classList.remove("past", "present", "future");
                 const i = "number" == typeof a.v ? a.v : 0;
                 t < i ? e.classList.add("past") : t > i ? e.classList.add("future") : (e.classList.add("present"), s === a.h && (n = e));
@@ -1256,8 +553,8 @@ class R {
         this.element.remove();
     }
 }
-let A = 0;
-class k {
+let $ef6d0cb1bf5eee6a$var$A = 0;
+class $ef6d0cb1bf5eee6a$var$k {
     constructor(e){
         this.Reveal = e;
     }
@@ -1265,17 +562,17 @@ class k {
         this.reset();
         let i = this.Reveal.getSlides(), s = i.indexOf(t), a = i.indexOf(e);
         if (e && t && e.hasAttribute("data-auto-animate") && t.hasAttribute("data-auto-animate") && e.getAttribute("data-auto-animate-id") === t.getAttribute("data-auto-animate-id") && !(s > a ? t : e).hasAttribute("data-auto-animate-restart")) {
-            this.autoAnimateStyleSheet = this.autoAnimateStyleSheet || l();
+            this.autoAnimateStyleSheet = this.autoAnimateStyleSheet || $ef6d0cb1bf5eee6a$var$l();
             let i = this.getAutoAnimateOptions(t);
             e.dataset.autoAnimate = "pending", t.dataset.autoAnimate = "pending", i.slideDirection = s > a ? "forward" : "backward";
             let n = "none" === e.style.display;
             n && (e.style.display = this.Reveal.getConfig().display);
-            let r = this.getAutoAnimatableElements(e, t).map((e)=>this.autoAnimateElements(e.from, e.to, e.options || {}, i, A++));
+            let r = this.getAutoAnimatableElements(e, t).map((e)=>this.autoAnimateElements(e.from, e.to, e.options || {}, i, $ef6d0cb1bf5eee6a$var$A++));
             if (n && (e.style.display = "none"), "false" !== t.dataset.autoAnimateUnmatched && !0 === this.Reveal.getConfig().autoAnimateUnmatched) {
                 let e = .8 * i.duration, s = .2 * i.duration;
                 this.getUnmatchedAutoAnimateElements(t).forEach((e)=>{
                     let t = this.getAutoAnimateOptions(e, i), s = "unmatched";
-                    t.duration === i.duration && t.delay === i.delay || (s = "unmatched-" + A++, r.push(`[data-auto-animate="running"] [data-auto-animate-target="${s}"] { transition: opacity ${t.duration}s ease ${t.delay}s; }`)), e.dataset.autoAnimateTarget = s;
+                    t.duration === i.duration && t.delay === i.delay || (s = "unmatched-" + $ef6d0cb1bf5eee6a$var$A++, r.push(`[data-auto-animate="running"] [data-auto-animate-target="${s}"] { transition: opacity ${t.duration}s ease ${t.delay}s; }`)), e.dataset.autoAnimateTarget = s;
                 }, this), r.push(`[data-auto-animate="running"] [data-auto-animate-target="unmatched"] { transition: opacity ${e}s ease ${s}s; }`);
             }
             this.autoAnimateStyleSheet.innerHTML = r.join(""), requestAnimationFrame(()=>{
@@ -1291,9 +588,9 @@ class k {
         }
     }
     reset() {
-        t(this.Reveal.getRevealElement(), '[data-auto-animate]:not([data-auto-animate=""])').forEach((e)=>{
+        $ef6d0cb1bf5eee6a$var$t(this.Reveal.getRevealElement(), '[data-auto-animate]:not([data-auto-animate=""])').forEach((e)=>{
             e.dataset.autoAnimate = "";
-        }), t(this.Reveal.getRevealElement(), "[data-auto-animate-target]").forEach((e)=>{
+        }), $ef6d0cb1bf5eee6a$var$t(this.Reveal.getRevealElement(), "[data-auto-animate-target]").forEach((e)=>{
             delete e.dataset.autoAnimateTarget;
         }), this.autoAnimateStyleSheet && this.autoAnimateStyleSheet.parentNode && (this.autoAnimateStyleSheet.parentNode.removeChild(this.autoAnimateStyleSheet), this.autoAnimateStyleSheet = null);
     }
@@ -1330,8 +627,8 @@ class k {
             duration: this.Reveal.getConfig().autoAnimateDuration,
             delay: 0
         };
-        if (s = e(s, i), t.parentNode) {
-            let e = r(t.parentNode, "[data-auto-animate-target]");
+        if (s = $ef6d0cb1bf5eee6a$var$e(s, i), t.parentNode) {
+            let e = $ef6d0cb1bf5eee6a$var$r(t.parentNode, "[data-auto-animate-target]");
             e && (s = this.getAutoAnimateOptions(e, s));
         }
         return t.dataset.autoAnimateEasing && (s.easing = t.dataset.autoAnimateEasing), t.dataset.autoAnimateDuration && (s.duration = parseFloat(t.dataset.autoAnimateDuration)), t.dataset.autoAnimateDelay && (s.delay = parseFloat(t.dataset.autoAnimateDelay)), s;
@@ -1379,9 +676,9 @@ class k {
         let i = [];
         const s = "h1, h2, h3, h4, h5, h6, p, li";
         return this.findAutoAnimateMatches(i, e, t, "[data-id]", (e)=>e.nodeName + ":::" + e.getAttribute("data-id")), this.findAutoAnimateMatches(i, e, t, s, (e)=>e.nodeName + ":::" + e.textContent.trim()), this.findAutoAnimateMatches(i, e, t, "img, video, iframe", (e)=>e.nodeName + ":::" + (e.getAttribute("src") || e.getAttribute("data-src"))), this.findAutoAnimateMatches(i, e, t, "pre", (e)=>e.nodeName + ":::" + e.textContent.trim()), i.forEach((e)=>{
-            n(e.from, s) ? e.options = {
+            $ef6d0cb1bf5eee6a$var$n(e.from, s) ? e.options = {
                 scale: !1
-            } : n(e.from, "pre") && (e.options = {
+            } : $ef6d0cb1bf5eee6a$var$n(e.from, "pre") && (e.options = {
                 scale: !1,
                 styles: [
                     "width",
@@ -1435,7 +732,7 @@ class k {
         }, []);
     }
 }
-class L {
+class $ef6d0cb1bf5eee6a$var$L {
     constructor(e){
         this.Reveal = e, this.active = !1, this.activatedCallbacks = [], this.onScroll = this.onScroll.bind(this);
     }
@@ -1443,7 +740,7 @@ class L {
         if (this.active) return;
         const e = this.Reveal.getState();
         this.active = !0, this.slideHTMLBeforeActivation = this.Reveal.getSlidesElement().innerHTML;
-        const i = t(this.Reveal.getRevealElement(), f), s = t(this.Reveal.getRevealElement(), ".backgrounds>.slide-background");
+        const i = $ef6d0cb1bf5eee6a$var$t(this.Reveal.getRevealElement(), $ef6d0cb1bf5eee6a$var$f), s = $ef6d0cb1bf5eee6a$var$t(this.Reveal.getRevealElement(), ".backgrounds>.slide-background");
         let a;
         this.viewportElement.classList.add("loading-scroll-mode", "reveal-scroll");
         const n = window.getComputedStyle(this.viewportElement);
@@ -1468,7 +765,7 @@ class L {
             this.Reveal.isVerticalStack(e) ? e.querySelectorAll("section").forEach((e, i)=>{
                 d(e, t, i, !0);
             }) : d(e, t, 0);
-        }, this), this.createProgressBar(), t(this.Reveal.getRevealElement(), ".stack").forEach((e)=>e.remove()), r.forEach((e)=>o.appendChild(e)), this.Reveal.slideContent.layout(this.Reveal.getSlidesElement()), this.Reveal.layout(), this.Reveal.setState(e), this.activatedCallbacks.forEach((e)=>e()), this.activatedCallbacks = [], this.restoreScrollPosition(), this.viewportElement.classList.remove("loading-scroll-mode"), this.viewportElement.addEventListener("scroll", this.onScroll, {
+        }, this), this.createProgressBar(), $ef6d0cb1bf5eee6a$var$t(this.Reveal.getRevealElement(), ".stack").forEach((e)=>e.remove()), r.forEach((e)=>o.appendChild(e)), this.Reveal.slideContent.layout(this.Reveal.getSlidesElement()), this.Reveal.layout(), this.Reveal.setState(e), this.activatedCallbacks.forEach((e)=>e()), this.activatedCallbacks = [], this.restoreScrollPosition(), this.viewportElement.classList.remove("loading-scroll-mode"), this.viewportElement.addEventListener("scroll", this.onScroll, {
             passive: !0
         });
     }
@@ -1672,13 +969,13 @@ class L {
         return this.Reveal.getViewportElement();
     }
 }
-class C {
+class $ef6d0cb1bf5eee6a$var$C {
     constructor(e){
         this.Reveal = e;
     }
     async activate() {
-        const e = this.Reveal.getConfig(), i = t(this.Reveal.getRevealElement(), m), s = e.slideNumber && /all|print/i.test(e.showSlideNumber), a = this.Reveal.getComputedSlideSize(window.innerWidth, window.innerHeight), n = Math.floor(a.width * (1 + e.margin)), r = Math.floor(a.height * (1 + e.margin)), o = a.width, d = a.height;
-        await new Promise(requestAnimationFrame), l("@page{size:" + n + "px " + r + "px; margin: 0px;}"), l(".reveal section>img, .reveal section>video, .reveal section>iframe{max-width: " + o + "px; max-height:" + d + "px}"), document.documentElement.classList.add("reveal-print", "print-pdf"), document.body.style.width = n + "px", document.body.style.height = r + "px";
+        const e = this.Reveal.getConfig(), i = $ef6d0cb1bf5eee6a$var$t(this.Reveal.getRevealElement(), $ef6d0cb1bf5eee6a$var$m), s = e.slideNumber && /all|print/i.test(e.showSlideNumber), a = this.Reveal.getComputedSlideSize(window.innerWidth, window.innerHeight), n = Math.floor(a.width * (1 + e.margin)), r = Math.floor(a.height * (1 + e.margin)), o = a.width, d = a.height;
+        await new Promise(requestAnimationFrame), $ef6d0cb1bf5eee6a$var$l("@page{size:" + n + "px " + r + "px; margin: 0px;}"), $ef6d0cb1bf5eee6a$var$l(".reveal section>img, .reveal section>video, .reveal section>iframe{max-width: " + o + "px; max-height:" + d + "px}"), document.documentElement.classList.add("reveal-print", "print-pdf"), document.body.style.width = n + "px", document.body.style.height = r + "px";
         const c = this.Reveal.getViewportElement();
         let h;
         if (c) {
@@ -1726,7 +1023,7 @@ class C {
                             e.classList.remove("visible", "current-fragment");
                         });
                     });
-                } else t(f, ".fragment:not(.fade-out)").forEach(function(e) {
+                } else $ef6d0cb1bf5eee6a$var$t(f, ".fragment:not(.fade-out)").forEach(function(e) {
                     e.classList.add("visible");
                 });
             }
@@ -1738,7 +1035,7 @@ class C {
         return "print" === this.Reveal.getConfig().view;
     }
 }
-class P {
+class $ef6d0cb1bf5eee6a$var$x {
     constructor(e){
         this.Reveal = e;
     }
@@ -1746,12 +1043,12 @@ class P {
         !1 === e.fragments ? this.disable() : !1 === t.fragments && this.enable();
     }
     disable() {
-        t(this.Reveal.getSlidesElement(), ".fragment").forEach((e)=>{
+        $ef6d0cb1bf5eee6a$var$t(this.Reveal.getSlidesElement(), ".fragment").forEach((e)=>{
             e.classList.add("visible"), e.classList.remove("current-fragment");
         });
     }
     enable() {
-        t(this.Reveal.getSlidesElement(), ".fragment").forEach((e)=>{
+        $ef6d0cb1bf5eee6a$var$t(this.Reveal.getSlidesElement(), ".fragment").forEach((e)=>{
             e.classList.remove("visible"), e.classList.remove("current-fragment");
         });
     }
@@ -1789,7 +1086,7 @@ class P {
     }
     sortAll() {
         this.Reveal.getHorizontalSlides().forEach((e)=>{
-            let i = t(e, "section");
+            let i = $ef6d0cb1bf5eee6a$var$t(e, "section");
             i.forEach((e, t)=>{
                 this.sort(e.querySelectorAll(".fragment"));
             }, this), 0 === i.length && this.sort(e.querySelectorAll(".fragment"));
@@ -1864,13 +1161,13 @@ class P {
         return this.goto(null, -1);
     }
 }
-class x {
+class $ef6d0cb1bf5eee6a$var$P {
     constructor(e){
         this.Reveal = e, this.active = !1, this.onSlideClicked = this.onSlideClicked.bind(this);
     }
     activate() {
         if (this.Reveal.getConfig().overview && !this.Reveal.isScrollView() && !this.isActive()) {
-            this.active = !0, this.Reveal.getRevealElement().classList.add("overview"), this.Reveal.cancelAutoSlide(), this.Reveal.getSlidesElement().appendChild(this.Reveal.getBackgroundsElement()), t(this.Reveal.getRevealElement(), m).forEach((e)=>{
+            this.active = !0, this.Reveal.getRevealElement().classList.add("overview"), this.Reveal.cancelAutoSlide(), this.Reveal.getSlidesElement().appendChild(this.Reveal.getBackgroundsElement()), $ef6d0cb1bf5eee6a$var$t(this.Reveal.getRevealElement(), $ef6d0cb1bf5eee6a$var$m).forEach((e)=>{
                 e.classList.contains("stack") || e.addEventListener("click", this.onSlideClicked, !0);
             });
             const e = 70, i = this.Reveal.getComputedSlideSize();
@@ -1888,12 +1185,12 @@ class x {
     }
     layout() {
         this.Reveal.getHorizontalSlides().forEach((e, i)=>{
-            e.setAttribute("data-index-h", i), a(e, "translate3d(" + i * this.overviewSlideWidth + "px, 0, 0)"), e.classList.contains("stack") && t(e, "section").forEach((e, t)=>{
-                e.setAttribute("data-index-h", i), e.setAttribute("data-index-v", t), a(e, "translate3d(0, " + t * this.overviewSlideHeight + "px, 0)");
+            e.setAttribute("data-index-h", i), $ef6d0cb1bf5eee6a$var$a(e, "translate3d(" + i * this.overviewSlideWidth + "px, 0, 0)"), e.classList.contains("stack") && $ef6d0cb1bf5eee6a$var$t(e, "section").forEach((e, t)=>{
+                e.setAttribute("data-index-h", i), e.setAttribute("data-index-v", t), $ef6d0cb1bf5eee6a$var$a(e, "translate3d(0, " + t * this.overviewSlideHeight + "px, 0)");
             });
         }), Array.from(this.Reveal.getBackgroundsElement().childNodes).forEach((e, i)=>{
-            a(e, "translate3d(" + i * this.overviewSlideWidth + "px, 0, 0)"), t(e, ".slide-background").forEach((e, t)=>{
-                a(e, "translate3d(0, " + t * this.overviewSlideHeight + "px, 0)");
+            $ef6d0cb1bf5eee6a$var$a(e, "translate3d(" + i * this.overviewSlideWidth + "px, 0, 0)"), $ef6d0cb1bf5eee6a$var$t(e, ".slide-background").forEach((e, t)=>{
+                $ef6d0cb1bf5eee6a$var$a(e, "translate3d(0, " + t * this.overviewSlideHeight + "px, 0)");
             });
         });
     }
@@ -1911,10 +1208,10 @@ class x {
         if (this.Reveal.getConfig().overview) {
             this.active = !1, this.Reveal.getRevealElement().classList.remove("overview"), this.Reveal.getRevealElement().classList.add("overview-deactivating"), setTimeout(()=>{
                 this.Reveal.getRevealElement().classList.remove("overview-deactivating");
-            }, 1), this.Reveal.getRevealElement().appendChild(this.Reveal.getBackgroundsElement()), t(this.Reveal.getRevealElement(), m).forEach((e)=>{
-                a(e, ""), e.removeEventListener("click", this.onSlideClicked, !0);
-            }), t(this.Reveal.getBackgroundsElement(), ".slide-background").forEach((e)=>{
-                a(e, "");
+            }, 1), this.Reveal.getRevealElement().appendChild(this.Reveal.getBackgroundsElement()), $ef6d0cb1bf5eee6a$var$t(this.Reveal.getRevealElement(), $ef6d0cb1bf5eee6a$var$m).forEach((e)=>{
+                $ef6d0cb1bf5eee6a$var$a(e, ""), e.removeEventListener("click", this.onSlideClicked, !0);
+            }), $ef6d0cb1bf5eee6a$var$t(this.Reveal.getBackgroundsElement(), ".slide-background").forEach((e)=>{
+                $ef6d0cb1bf5eee6a$var$a(e, "");
             }), this.Reveal.transformSlides({
                 overview: ""
             });
@@ -1947,7 +1244,7 @@ class x {
         }
     }
 }
-class T {
+class $ef6d0cb1bf5eee6a$var$T {
     constructor(e){
         this.Reveal = e, this.shortcuts = {}, this.bindings = {}, this.onDocumentKeyDown = this.onDocumentKeyDown.bind(this);
     }
@@ -2014,6 +1311,13 @@ class T {
             112
         ];
         if ("object" == typeof t.keyboard) for(d in t.keyboard)"togglePause" === t.keyboard[d] && c.push(parseInt(d, 10));
+        if (this.Reveal.isOverlayOpen() && ![
+            "Escape",
+            "f",
+            "c",
+            "b",
+            "."
+        ].includes(e.key)) return !1;
         if (this.Reveal.isPaused() && -1 === c.indexOf(i)) return !1;
         let h = "linear" === t.navigationMode || !this.Reveal.hasHorizontalSlides() || !this.Reveal.hasVerticalSlides(), u = !1;
         if ("object" == typeof t.keyboard) {
@@ -2066,10 +1370,10 @@ class T {
             66,
             86,
             190
-        ].includes(i) || 191 === i && !e.shiftKey ? this.Reveal.togglePause() : 70 === i ? o(t.embedded ? this.Reveal.getViewportElement() : document.documentElement) : 65 === i ? t.autoSlideStoppable && this.Reveal.toggleAutoSlide(s) : 71 === i ? t.jumpToSlide && this.Reveal.toggleJumpToSlide() : 63 !== i && 191 !== i || !e.shiftKey ? 112 === i ? this.Reveal.toggleHelp() : u = !1 : this.Reveal.toggleHelp()), u ? e.preventDefault && e.preventDefault() : 27 !== i && 79 !== i || (!1 === this.Reveal.closeOverlay() && this.Reveal.overview.toggle(), e.preventDefault && e.preventDefault()), this.Reveal.cueAutoSlide();
+        ].includes(i) || 191 === i && !e.shiftKey ? this.Reveal.togglePause() : 70 === i ? $ef6d0cb1bf5eee6a$var$o(t.embedded ? this.Reveal.getViewportElement() : document.documentElement) : 65 === i ? t.autoSlideStoppable && this.Reveal.toggleAutoSlide(s) : 71 === i ? t.jumpToSlide && this.Reveal.toggleJumpToSlide() : 67 === i && this.Reveal.isOverlayOpen() ? this.Reveal.closeOverlay() : 63 !== i && 191 !== i || !e.shiftKey ? 112 === i ? this.Reveal.toggleHelp() : u = !1 : this.Reveal.toggleHelp()), u ? e.preventDefault && e.preventDefault() : 27 !== i && 79 !== i || (!1 === this.Reveal.closeOverlay() && this.Reveal.overview.toggle(), e.preventDefault && e.preventDefault()), this.Reveal.cueAutoSlide();
     }
 }
-class N {
+class $ef6d0cb1bf5eee6a$var$N {
     MAX_REPLACE_STATE_FREQUENCY = 1e3;
     constructor(e){
         this.Reveal = e, this.writeURLTimeout = 0, this.replaceStateTimestamp = 0, this.onWindowHashChange = this.onWindowHashChange.bind(this);
@@ -2137,13 +1441,13 @@ class N {
         this.readURL();
     }
 }
-class M {
+class $ef6d0cb1bf5eee6a$var$I {
     constructor(e){
         this.Reveal = e, this.onNavigateLeftClicked = this.onNavigateLeftClicked.bind(this), this.onNavigateRightClicked = this.onNavigateRightClicked.bind(this), this.onNavigateUpClicked = this.onNavigateUpClicked.bind(this), this.onNavigateDownClicked = this.onNavigateDownClicked.bind(this), this.onNavigatePrevClicked = this.onNavigatePrevClicked.bind(this), this.onNavigateNextClicked = this.onNavigateNextClicked.bind(this), this.onEnterFullscreen = this.onEnterFullscreen.bind(this);
     }
     render() {
         const e = this.Reveal.getConfig().rtl, i = this.Reveal.getRevealElement();
-        this.element = document.createElement("aside"), this.element.className = "controls", this.element.innerHTML = `<button class="navigate-left" aria-label="${e ? "next slide" : "previous slide"}"><div class="controls-arrow"></div></button>\n\t\t\t<button class="navigate-right" aria-label="${e ? "previous slide" : "next slide"}"><div class="controls-arrow"></div></button>\n\t\t\t<button class="navigate-up" aria-label="above slide"><div class="controls-arrow"></div></button>\n\t\t\t<button class="navigate-down" aria-label="below slide"><div class="controls-arrow"></div></button>`, this.Reveal.getRevealElement().appendChild(this.element), this.controlsLeft = t(i, ".navigate-left"), this.controlsRight = t(i, ".navigate-right"), this.controlsUp = t(i, ".navigate-up"), this.controlsDown = t(i, ".navigate-down"), this.controlsPrev = t(i, ".navigate-prev"), this.controlsNext = t(i, ".navigate-next"), this.controlsFullscreen = t(i, ".enter-fullscreen"), this.controlsRightArrow = this.element.querySelector(".navigate-right"), this.controlsLeftArrow = this.element.querySelector(".navigate-left"), this.controlsDownArrow = this.element.querySelector(".navigate-down");
+        this.element = document.createElement("aside"), this.element.className = "controls", this.element.innerHTML = `<button class="navigate-left" aria-label="${e ? "next slide" : "previous slide"}"><div class="controls-arrow"></div></button>\n\t\t\t<button class="navigate-right" aria-label="${e ? "previous slide" : "next slide"}"><div class="controls-arrow"></div></button>\n\t\t\t<button class="navigate-up" aria-label="above slide"><div class="controls-arrow"></div></button>\n\t\t\t<button class="navigate-down" aria-label="below slide"><div class="controls-arrow"></div></button>`, this.Reveal.getRevealElement().appendChild(this.element), this.controlsLeft = $ef6d0cb1bf5eee6a$var$t(i, ".navigate-left"), this.controlsRight = $ef6d0cb1bf5eee6a$var$t(i, ".navigate-right"), this.controlsUp = $ef6d0cb1bf5eee6a$var$t(i, ".navigate-up"), this.controlsDown = $ef6d0cb1bf5eee6a$var$t(i, ".navigate-down"), this.controlsPrev = $ef6d0cb1bf5eee6a$var$t(i, ".navigate-prev"), this.controlsNext = $ef6d0cb1bf5eee6a$var$t(i, ".navigate-next"), this.controlsFullscreen = $ef6d0cb1bf5eee6a$var$t(i, ".enter-fullscreen"), this.controlsRightArrow = this.element.querySelector(".navigate-right"), this.controlsLeftArrow = this.element.querySelector(".navigate-left"), this.controlsDownArrow = this.element.querySelector(".navigate-down");
     }
     configure(e, t) {
         this.element.style.display = e.controls && ("speaker-only" !== e.controls || this.Reveal.isSpeakerNotes()) ? "block" : "none", this.element.setAttribute("data-controls-layout", e.controlsLayout), this.element.setAttribute("data-controls-back-arrows", e.controlsBackArrows);
@@ -2153,7 +1457,7 @@ class M {
             "touchstart",
             "click"
         ];
-        g && (e = [
+        $ef6d0cb1bf5eee6a$var$g && (e = [
             "touchstart"
         ]), e.forEach((e)=>{
             this.controlsLeft.forEach((t)=>t.addEventListener(e, this.onNavigateLeftClicked, !1)), this.controlsRight.forEach((t)=>t.addEventListener(e, this.onNavigateRightClicked, !1)), this.controlsUp.forEach((t)=>t.addEventListener(e, this.onNavigateUpClicked, !1)), this.controlsDown.forEach((t)=>t.addEventListener(e, this.onNavigateDownClicked, !1)), this.controlsPrev.forEach((t)=>t.addEventListener(e, this.onNavigatePrevClicked, !1)), this.controlsNext.forEach((t)=>t.addEventListener(e, this.onNavigateNextClicked, !1)), this.controlsFullscreen.forEach((t)=>t.addEventListener(e, this.onEnterFullscreen, !1));
@@ -2238,10 +1542,10 @@ class M {
     }
     onEnterFullscreen(e) {
         const t = this.Reveal.getConfig(), i = this.Reveal.getViewportElement();
-        o(t.embedded ? i : i.parentElement);
+        $ef6d0cb1bf5eee6a$var$o(t.embedded ? i : i.parentElement);
     }
 }
-class I {
+class $ef6d0cb1bf5eee6a$var$M {
     constructor(e){
         this.Reveal = e, this.onProgressClicked = this.onProgressClicked.bind(this);
     }
@@ -2277,7 +1581,7 @@ class I {
         this.element.remove();
     }
 }
-class B {
+class $ef6d0cb1bf5eee6a$var$B {
     constructor(e){
         this.Reveal = e, this.lastMouseWheelStep = 0, this.cursorHidden = !1, this.cursorInactiveTimeout = 0, this.onDocumentCursorActive = this.onDocumentCursorActive.bind(this), this.onDocumentMouseScroll = this.onDocumentMouseScroll.bind(this);
     }
@@ -2304,7 +1608,7 @@ class B {
         }
     }
 }
-const H = (e, t)=>{
+const $ef6d0cb1bf5eee6a$var$H = (e, t)=>{
     const i = document.createElement("script");
     i.type = "text/javascript", i.async = !1, i.defer = !1, i.src = e, "function" == typeof t && (i.onload = i.onreadystatechange = (e)=>{
         ("load" === e.type || /loaded|complete/.test(i.readyState)) && (i.onload = i.onreadystatechange = i.onerror = null, t());
@@ -2314,7 +1618,7 @@ const H = (e, t)=>{
     const s = document.querySelector("head");
     s.insertBefore(i, s.lastChild);
 };
-class D {
+class $ef6d0cb1bf5eee6a$var$D {
     constructor(e){
         this.Reveal = e, this.state = "idle", this.registeredPlugins = {}, this.asyncDependencies = [];
     }
@@ -2329,7 +1633,7 @@ class D {
                     t && "function" == typeof t.callback && t.callback(), 0 == --s && this.initPlugins().then(e);
                 };
                 i.forEach((e)=>{
-                    "string" == typeof e.id ? (this.registerPlugin(e), t(e)) : "string" == typeof e.src ? H(e.src, ()=>t(e)) : (console.warn("Unrecognized plugin format", e), t());
+                    "string" == typeof e.id ? (this.registerPlugin(e), t(e)) : "string" == typeof e.src ? $ef6d0cb1bf5eee6a$var$H(e.src, ()=>t(e)) : (console.warn("Unrecognized plugin format", e), t());
                 });
             } else this.initPlugins().then(e);
         });
@@ -2354,7 +1658,7 @@ class D {
     }
     loadAsync() {
         return this.state = "loaded", this.asyncDependencies.length && this.asyncDependencies.forEach((e)=>{
-            H(e.src, e.callback);
+            $ef6d0cb1bf5eee6a$var$H(e.src, e.callback);
         }), Promise.resolve();
     }
     registerPlugin(e) {
@@ -2377,35 +1681,48 @@ class D {
         }), this.registeredPlugins = {}, this.asyncDependencies = [];
     }
 }
-class F {
+class $ef6d0cb1bf5eee6a$var$F {
     constructor(e){
-        this.Reveal = e, this.onSlidesClicked = this.onSlidesClicked.bind(this), this.linkPreviewSelector = null, this.mediaPreviewSelector = "[data-preview-image], [data-preview-video]";
+        this.Reveal = e, this.onSlidesClicked = this.onSlidesClicked.bind(this), this.iframeTriggerSelector = null, this.mediaTriggerSelector = "[data-preview-image], [data-preview-video]", this.stateProps = [
+            "previewIframe",
+            "previewImage",
+            "previewVideo",
+            "previewFit"
+        ], this.state = {};
     }
     update() {
-        this.Reveal.getConfig().previewLinks ? this.linkPreviewSelector = "a[href]:not([data-preview-link=false])" : this.linkPreviewSelector = "[data-preview-link]:not([data-preview-link=false])", this.hasLinkPreviews = this.Reveal.getSlidesElement().querySelectorAll(this.linkPreviewSelector).length > 0, this.hasMediaPreviews = this.Reveal.getSlidesElement().querySelectorAll(this.mediaPreviewSelector).length > 0, this.hasLinkPreviews || this.hasMediaPreviews ? this.Reveal.getSlidesElement().addEventListener("click", this.onSlidesClicked, !1) : this.Reveal.getSlidesElement().removeEventListener("click", this.onSlidesClicked, !1);
+        this.Reveal.getConfig().previewLinks ? this.iframeTriggerSelector = "a[href]:not([data-preview-link=false]), [data-preview-link]:not(a):not([data-preview-link=false])" : this.iframeTriggerSelector = "[data-preview-link]:not([data-preview-link=false])";
+        const e = this.Reveal.getSlidesElement().querySelectorAll(this.iframeTriggerSelector).length > 0, t = this.Reveal.getSlidesElement().querySelectorAll(this.mediaTriggerSelector).length > 0;
+        e || t ? this.Reveal.getSlidesElement().addEventListener("click", this.onSlidesClicked, !1) : this.Reveal.getSlidesElement().removeEventListener("click", this.onSlidesClicked, !1);
     }
     createOverlay(e) {
         this.dom = document.createElement("div"), this.dom.classList.add("r-overlay"), this.dom.classList.add(e), this.viewport = document.createElement("div"), this.viewport.classList.add("r-overlay-viewport"), this.dom.appendChild(this.viewport), this.Reveal.getRevealElement().appendChild(this.dom);
     }
-    showIframePreview(e) {
-        this.close(), this.createOverlay("r-overlay-preview"), this.dom.dataset.state = "loading", this.viewport.innerHTML = `<header class="r-overlay-header">\n\t\t\t\t<a class="r-overlay-button r-overlay-external" href="${e}" target="_blank"><span class="icon"></span></a>\n\t\t\t\t<button class="r-overlay-button r-overlay-close"><span class="icon"></span></button>\n\t\t\t</header>\n\t\t\t<div class="r-overlay-spinner"></div>\n\t\t\t<div class="r-overlay-content">\n\t\t\t\t<iframe src="${e}"></iframe>\n\t\t\t\t<small class="r-overlay-content-inner">\n\t\t\t\t\t<span class="r-overlay-error x-frame-error">Unable to load iframe. This is likely due to the site's policy (x-frame-options).</span>\n\t\t\t\t</small>\n\t\t\t</div>`, this.dom.querySelector("iframe").addEventListener("load", (e)=>{
+    previewIframe(e) {
+        this.close(), this.state = {
+            previewIframe: e
+        }, this.createOverlay("r-overlay-preview"), this.dom.dataset.state = "loading", this.viewport.innerHTML = `<header class="r-overlay-header">\n\t\t\t\t<a class="r-overlay-button r-overlay-external" href="${e}" target="_blank"><span class="icon"></span></a>\n\t\t\t\t<button class="r-overlay-button r-overlay-close"><span class="icon"></span></button>\n\t\t\t</header>\n\t\t\t<div class="r-overlay-spinner"></div>\n\t\t\t<div class="r-overlay-content">\n\t\t\t\t<iframe src="${e}"></iframe>\n\t\t\t\t<small class="r-overlay-content-inner">\n\t\t\t\t\t<span class="r-overlay-error x-frame-error">Unable to load iframe. This is likely due to the site's policy (x-frame-options).</span>\n\t\t\t\t</small>\n\t\t\t</div>`, this.dom.querySelector("iframe").addEventListener("load", (e)=>{
             this.dom.dataset.state = "loaded";
         }, !1), this.dom.querySelector(".r-overlay-close").addEventListener("click", (e)=>{
             this.close(), e.preventDefault();
         }, !1), this.dom.querySelector(".r-overlay-external").addEventListener("click", (e)=>{
             this.close();
         }, !1), this.Reveal.dispatchEvent({
-            type: "showiframepreview",
+            type: "previewiframe",
             data: {
                 url: e
             }
         });
     }
-    showMediaPreview(e, t, i) {
+    previewMedia(e, t, i) {
         if ("image" !== t && "video" !== t) return void console.warn("Please specify a valid media type to preview (image|video)");
-        this.close(), this.createOverlay("r-overlay-preview"), this.dom.dataset.state = "loading", this.dom.dataset.previewFit = i && i.dataset.previewFit || "scale-down", this.viewport.innerHTML = '<header class="r-overlay-header">\n\t\t\t\t<button class="r-overlay-button r-overlay-close">Esc <span class="icon"></span></button>\n\t\t\t</header>\n\t\t\t<div class="r-overlay-spinner"></div>\n\t\t\t<div class="r-overlay-content"></div>';
+        this.close(), i = i || "scale-down", this.createOverlay("r-overlay-preview"), this.dom.dataset.state = "loading", this.dom.dataset.previewFit = i, this.viewport.innerHTML = '<header class="r-overlay-header">\n\t\t\t\t<button class="r-overlay-button r-overlay-close">Esc <span class="icon"></span></button>\n\t\t\t</header>\n\t\t\t<div class="r-overlay-spinner"></div>\n\t\t\t<div class="r-overlay-content"></div>';
         const s = this.dom.querySelector(".r-overlay-content");
         if ("image" === t) {
+            this.state = {
+                previewImage: e,
+                previewFit: i
+            };
             const t = document.createElement("img", {});
             t.src = e, s.appendChild(t), t.addEventListener("load", ()=>{
                 this.dom.dataset.state = "loaded";
@@ -2413,28 +1730,41 @@ class F {
                 this.dom.dataset.state = "error", s.innerHTML = '<span class="r-overlay-error">Unable to load image.</span>';
             }, !1), this.dom.style.cursor = "zoom-out", this.dom.addEventListener("click", (e)=>{
                 this.close();
-            }, !1);
+            }, !1), this.Reveal.dispatchEvent({
+                type: "previewimage",
+                data: {
+                    url: e
+                }
+            });
         } else {
             if ("video" !== t) throw new Error("Please specify a valid media type to preview");
             {
+                this.state = {
+                    previewVideo: e,
+                    previewFit: i
+                };
                 const t = document.createElement("video");
                 t.autoplay = "false" !== this.dom.dataset.previewAutoplay, t.controls = "false" !== this.dom.dataset.previewControls, t.loop = "true" === this.dom.dataset.previewLoop, t.muted = "true" === this.dom.dataset.previewMuted, t.playsInline = !0, t.src = e, s.appendChild(t), t.addEventListener("loadeddata", ()=>{
                     this.dom.dataset.state = "loaded";
                 }, !1), t.addEventListener("error", ()=>{
                     this.dom.dataset.state = "error", s.innerHTML = '<span class="r-overlay-error">Unable to load video.</span>';
-                }, !1);
+                }, !1), this.Reveal.dispatchEvent({
+                    type: "previewvideo",
+                    data: {
+                        url: e
+                    }
+                });
             }
         }
         this.dom.querySelector(".r-overlay-close").addEventListener("click", (e)=>{
             this.close(), e.preventDefault();
-        }, !1), this.Reveal.dispatchEvent({
-            type: "showmediapreview",
-            data: {
-                mediaType: t,
-                url: e,
-                trigger: i
-            }
-        });
+        }, !1);
+    }
+    previewImage(e, t) {
+        this.previewMedia(e, "image", t);
+    }
+    previewVideo(e, t) {
+        this.previewMedia(e, "video", t);
     }
     toggleHelp(e) {
         "boolean" == typeof e ? e ? this.showHelp() : this.close() : this.dom ? this.close() : this.showHelp();
@@ -2457,24 +1787,33 @@ class F {
         return !!this.dom;
     }
     close() {
-        return !!this.dom && (this.dom.remove(), this.dom = null, !0);
+        return !!this.dom && (this.dom.remove(), this.dom = null, this.state = {}, this.Reveal.dispatchEvent({
+            type: "closeoverlay"
+        }), !0);
+    }
+    getState() {
+        return this.state;
+    }
+    setState(e) {
+        this.stateProps.every((t)=>this.state[t] === e[t]) || (e.previewIframe ? this.previewIframe(e.previewIframe) : e.previewImage ? this.previewImage(e.previewImage, e.previewFit) : e.previewVideo ? this.previewVideo(e.previewVideo, e.previewFit) : this.close());
     }
     onSlidesClicked(e) {
-        const t = e.target, i = t.closest(this.linkPreviewSelector), s = t.closest(this.mediaPreviewSelector);
+        const t = e.target, i = t.closest(this.iframeTriggerSelector), s = t.closest(this.mediaTriggerSelector);
         if (i) {
-            let t = i.getAttribute("href");
-            t && (this.showIframePreview(t), e.preventDefault());
+            if (e.metaKey || e.shiftKey || e.altKey) return;
+            let t = i.getAttribute("href") || i.getAttribute("data-preview-link");
+            t && (this.previewIframe(t), e.preventDefault());
         } else if (s) {
             if (s.hasAttribute("data-preview-image")) {
                 let t = s.dataset.previewImage || s.getAttribute("src");
-                t && (this.showMediaPreview(t, "image", s), e.preventDefault());
+                t && (this.previewImage(t, s.dataset.previewFit), e.preventDefault());
             } else if (s.hasAttribute("data-preview-video")) {
                 let t = s.dataset.previewVideo || s.getAttribute("src");
                 if (!t) {
                     let e = s.querySelector("source");
                     e && (t = e.getAttribute("src"));
                 }
-                t && (this.showMediaPreview(t, "video", s), e.preventDefault());
+                t && (this.previewVideo(t, s.dataset.previewFit), e.preventDefault());
             }
         }
     }
@@ -2482,7 +1821,7 @@ class F {
         this.close();
     }
 }
-class z {
+class $ef6d0cb1bf5eee6a$var$z {
     constructor(e){
         this.Reveal = e, this.touchStartX = 0, this.touchStartY = 0, this.touchStartCount = 0, this.touchCaptured = !1, this.onPointerDown = this.onPointerDown.bind(this), this.onPointerMove = this.onPointerMove.bind(this), this.onPointerUp = this.onPointerUp.bind(this), this.onTouchStart = this.onTouchStart.bind(this), this.onTouchMove = this.onTouchMove.bind(this), this.onTouchEnd = this.onTouchEnd.bind(this);
     }
@@ -2495,7 +1834,7 @@ class z {
         e.removeEventListener("pointerdown", this.onPointerDown, !1), e.removeEventListener("pointermove", this.onPointerMove, !1), e.removeEventListener("pointerup", this.onPointerUp, !1), e.removeEventListener("MSPointerDown", this.onPointerDown, !1), e.removeEventListener("MSPointerMove", this.onPointerMove, !1), e.removeEventListener("MSPointerUp", this.onPointerUp, !1), e.removeEventListener("touchstart", this.onTouchStart, !1), e.removeEventListener("touchmove", this.onTouchMove, !1), e.removeEventListener("touchend", this.onTouchEnd, !1);
     }
     isSwipePrevented(e) {
-        if (n(e, "video[controls], audio[controls]")) return !0;
+        if ($ef6d0cb1bf5eee6a$var$n(e, "video[controls], audio[controls]")) return !0;
         for(; e && "function" == typeof e.hasAttribute;){
             if (e.hasAttribute("data-prevent-swipe")) return !0;
             e = e.parentNode;
@@ -2509,7 +1848,7 @@ class z {
     onTouchMove(e) {
         if (this.isSwipePrevented(e.target)) return !0;
         let t = this.Reveal.getConfig();
-        if (this.touchCaptured) g && e.preventDefault();
+        if (this.touchCaptured) $ef6d0cb1bf5eee6a$var$g && e.preventDefault();
         else {
             this.Reveal.onUserInput(e);
             let i = e.touches[0].clientX, s = e.touches[0].clientY;
@@ -2549,8 +1888,8 @@ class z {
         ], this.onTouchEnd(e));
     }
 }
-const q = "focus", O = "blur";
-class U {
+const $ef6d0cb1bf5eee6a$var$q = "focus", $ef6d0cb1bf5eee6a$var$O = "blur";
+class $ef6d0cb1bf5eee6a$var$V {
     constructor(e){
         this.Reveal = e, this.onRevealPointerDown = this.onRevealPointerDown.bind(this), this.onDocumentPointerDown = this.onDocumentPointerDown.bind(this);
     }
@@ -2564,13 +1903,13 @@ class U {
         this.Reveal.getRevealElement().removeEventListener("pointerdown", this.onRevealPointerDown, !1), document.removeEventListener("pointerdown", this.onDocumentPointerDown, !1);
     }
     focus() {
-        this.state !== q && (this.Reveal.getRevealElement().classList.add("focused"), document.addEventListener("pointerdown", this.onDocumentPointerDown, !1)), this.state = q;
+        this.state !== $ef6d0cb1bf5eee6a$var$q && (this.Reveal.getRevealElement().classList.add("focused"), document.addEventListener("pointerdown", this.onDocumentPointerDown, !1)), this.state = $ef6d0cb1bf5eee6a$var$q;
     }
     blur() {
-        this.state !== O && (this.Reveal.getRevealElement().classList.remove("focused"), document.removeEventListener("pointerdown", this.onDocumentPointerDown, !1)), this.state = O;
+        this.state !== $ef6d0cb1bf5eee6a$var$O && (this.Reveal.getRevealElement().classList.remove("focused"), document.removeEventListener("pointerdown", this.onDocumentPointerDown, !1)), this.state = $ef6d0cb1bf5eee6a$var$O;
     }
     isFocused() {
-        return this.state === q;
+        return this.state === $ef6d0cb1bf5eee6a$var$q;
     }
     destroy() {
         this.Reveal.getRevealElement().classList.remove("focused");
@@ -2579,11 +1918,11 @@ class U {
         this.focus();
     }
     onDocumentPointerDown(e) {
-        let t = r(e.target, ".reveal");
+        let t = $ef6d0cb1bf5eee6a$var$r(e.target, ".reveal");
         t && t === this.Reveal.getRevealElement() || this.blur();
     }
 }
-class W {
+class $ef6d0cb1bf5eee6a$var$U {
     constructor(e){
         this.Reveal = e;
     }
@@ -2614,7 +1953,7 @@ class W {
         this.element.remove();
     }
 }
-class V {
+class $ef6d0cb1bf5eee6a$var$W {
     constructor(e, t){
         this.diameter = 100, this.diameter2 = this.diameter / 2, this.thickness = 6, this.playing = !1, this.progress = 0, this.progressOffset = 1, this.container = e, this.progressCheck = t, this.canvas = document.createElement("canvas"), this.canvas.className = "playback", this.canvas.width = this.diameter, this.canvas.height = this.diameter, this.canvas.style.width = this.diameter2 + "px", this.canvas.style.height = this.diameter2 + "px", this.context = this.canvas.getContext("2d"), this.container.appendChild(this.canvas), this.render();
     }
@@ -2642,7 +1981,7 @@ class V {
         this.playing = !1, this.canvas.parentNode && this.container.removeChild(this.canvas);
     }
 }
-var j = {
+var $ef6d0cb1bf5eee6a$var$j = {
     width: 960,
     height: 700,
     margin: .04,
@@ -2733,8 +2072,8 @@ var j = {
     dependencies: [],
     plugins: []
 };
-const K = "5.2.0";
-function $(n, o) {
+const $ef6d0cb1bf5eee6a$var$K = "5.2.1";
+function $ef6d0cb1bf5eee6a$var$$(n, o) {
     arguments.length < 2 && (o = arguments[0], n = document.querySelector(".reveal"));
     const l = {};
     let c, h, g, v, S, A = {}, H = !1, q = !1, O = {
@@ -2743,13 +2082,13 @@ function $(n, o) {
     }, $ = [], X = 1, Y = {
         layout: "",
         overview: ""
-    }, _ = {}, J = "idle", G = 0, Q = 0, Z = -1, ee = !1, te = new p(l), ie = new w(l), se = new E(l), ae = new k(l), ne = new R(l), re = new L(l), oe = new C(l), le = new P(l), de = new x(l), ce = new T(l), he = new N(l), ue = new M(l), ge = new I(l), ve = new B(l), pe = new D(l), me = new F(l), fe = new U(l), ye = new z(l), be = new W(l);
+    }, _ = {}, J = "idle", G = 0, Q = 0, Z = -1, ee = !1, te = new $ef6d0cb1bf5eee6a$var$p(l), ie = new $ef6d0cb1bf5eee6a$var$w(l), se = new $ef6d0cb1bf5eee6a$var$E(l), ae = new $ef6d0cb1bf5eee6a$var$k(l), ne = new $ef6d0cb1bf5eee6a$var$R(l), re = new $ef6d0cb1bf5eee6a$var$L(l), oe = new $ef6d0cb1bf5eee6a$var$C(l), le = new $ef6d0cb1bf5eee6a$var$x(l), de = new $ef6d0cb1bf5eee6a$var$P(l), ce = new $ef6d0cb1bf5eee6a$var$T(l), he = new $ef6d0cb1bf5eee6a$var$N(l), ue = new $ef6d0cb1bf5eee6a$var$I(l), ge = new $ef6d0cb1bf5eee6a$var$M(l), ve = new $ef6d0cb1bf5eee6a$var$B(l), pe = new $ef6d0cb1bf5eee6a$var$D(l), me = new $ef6d0cb1bf5eee6a$var$F(l), fe = new $ef6d0cb1bf5eee6a$var$V(l), ye = new $ef6d0cb1bf5eee6a$var$z(l), be = new $ef6d0cb1bf5eee6a$var$U(l);
     function we() {
-        !1 !== H && (q = !0, A.showHiddenSlides || t(_.wrapper, 'section[data-visibility="hidden"]').forEach((e)=>{
+        !1 !== H && (q = !0, A.showHiddenSlides || $ef6d0cb1bf5eee6a$var$t(_.wrapper, 'section[data-visibility="hidden"]').forEach((e)=>{
             const t = e.parentNode;
             1 === t.childElementCount && /section/i.test(t.nodeName) ? t.remove() : e.remove();
         }), function() {
-            _.slides.classList.add("no-transition"), u ? _.wrapper.classList.add("no-hover") : _.wrapper.classList.remove("no-hover");
+            _.slides.classList.add("no-transition"), $ef6d0cb1bf5eee6a$var$u ? _.wrapper.classList.add("no-hover") : _.wrapper.classList.remove("no-hover");
             ne.render(), ie.render(), se.render(), ue.render(), ge.render(), be.render(), _.pauseOverlay = ((e, t, i, s = "")=>{
                 let a = e.querySelectorAll("." + i);
                 for(let t = 0; t < a.length; t++){
@@ -2766,14 +2105,14 @@ function $(n, o) {
         }(), A.postMessage && window.addEventListener("message", wt, !1), setInterval(()=>{
             (!re.isActive() && 0 !== _.wrapper.scrollTop || 0 !== _.wrapper.scrollLeft) && (_.wrapper.scrollTop = 0, _.wrapper.scrollLeft = 0);
         }, 1e3), document.addEventListener("fullscreenchange", kt), document.addEventListener("webkitfullscreenchange", kt), st().forEach((e)=>{
-            t(e, "section").forEach((e, t)=>{
+            $ef6d0cb1bf5eee6a$var$t(e, "section").forEach((e, t)=>{
                 t > 0 && (e.classList.remove("present"), e.classList.remove("past"), e.classList.add("future"), e.setAttribute("aria-hidden", "true"));
             });
         }), Re(), ne.update(!0), function() {
             const e = "print" === A.view, t = "scroll" === A.view || "reader" === A.view;
             (e || t) && (e ? ke() : ye.unbind(), _.viewport.classList.add("loading-scroll-mode"), e ? "complete" === document.readyState ? oe.activate() : window.addEventListener("load", ()=>oe.activate()) : re.activate());
         }(), he.readURL(), setTimeout(()=>{
-            _.slides.classList.remove("no-transition"), _.wrapper.classList.add("ready"), xe({
+            _.slides.classList.remove("no-transition"), _.wrapper.classList.add("ready"), Pe({
                 type: "ready",
                 data: {
                     indexh: c,
@@ -2801,15 +2140,15 @@ function $(n, o) {
         const s = {
             ...A
         };
-        if ("object" == typeof t && e(A, t), !1 === l.isReady()) return;
-        const a = _.wrapper.querySelectorAll(m).length;
-        _.wrapper.classList.remove(s.transition), _.wrapper.classList.add(A.transition), _.wrapper.setAttribute("data-transition-speed", A.transitionSpeed), _.wrapper.setAttribute("data-background-transition", A.backgroundTransition), _.viewport.style.setProperty("--slide-width", "string" == typeof A.width ? A.width : A.width + "px"), _.viewport.style.setProperty("--slide-height", "string" == typeof A.height ? A.height : A.height + "px"), A.shuffle && Ye(), i(_.wrapper, "embedded", A.embedded), i(_.wrapper, "rtl", A.rtl), i(_.wrapper, "center", A.center), !1 === A.pause && We(), ae.reset(), S && (S.destroy(), S = null), a > 1 && A.autoSlide && A.autoSlideStoppable && (S = new V(_.wrapper, ()=>Math.min(Math.max((Date.now() - Z) / G, 0), 1)), S.on("click", Lt), ee = !1), "default" !== A.navigationMode ? _.wrapper.setAttribute("data-navigation-mode", A.navigationMode) : _.wrapper.removeAttribute("data-navigation-mode"), be.configure(A, s), fe.configure(A, s), ve.configure(A, s), ue.configure(A, s), ge.configure(A, s), ce.configure(A, s), le.configure(A, s), ie.configure(A, s), Xe();
+        if ("object" == typeof t && $ef6d0cb1bf5eee6a$var$e(A, t), !1 === l.isReady()) return;
+        const a = _.wrapper.querySelectorAll($ef6d0cb1bf5eee6a$var$m).length;
+        _.wrapper.classList.remove(s.transition), _.wrapper.classList.add(A.transition), _.wrapper.setAttribute("data-transition-speed", A.transitionSpeed), _.wrapper.setAttribute("data-background-transition", A.backgroundTransition), _.viewport.style.setProperty("--slide-width", "string" == typeof A.width ? A.width : A.width + "px"), _.viewport.style.setProperty("--slide-height", "string" == typeof A.height ? A.height : A.height + "px"), A.shuffle && Ye(), $ef6d0cb1bf5eee6a$var$i(_.wrapper, "embedded", A.embedded), $ef6d0cb1bf5eee6a$var$i(_.wrapper, "rtl", A.rtl), $ef6d0cb1bf5eee6a$var$i(_.wrapper, "center", A.center), !1 === A.pause && Ue(), ae.reset(), S && (S.destroy(), S = null), a > 1 && A.autoSlide && A.autoSlideStoppable && (S = new $ef6d0cb1bf5eee6a$var$W(_.wrapper, ()=>Math.min(Math.max((Date.now() - Z) / G, 0), 1)), S.on("click", Lt), ee = !1), "default" !== A.navigationMode ? _.wrapper.setAttribute("data-navigation-mode", A.navigationMode) : _.wrapper.removeAttribute("data-navigation-mode"), be.configure(A, s), fe.configure(A, s), ve.configure(A, s), ue.configure(A, s), ge.configure(A, s), ce.configure(A, s), le.configure(A, s), ie.configure(A, s), Xe();
     }
     function Ae() {
-        window.addEventListener("resize", Rt, !1), A.touch && ye.bind(), A.keyboard && ce.bind(), A.progress && ge.bind(), A.respondToHashChanges && he.bind(), ue.bind(), fe.bind(), _.slides.addEventListener("click", St, !1), _.slides.addEventListener("transitionend", Et, !1), _.pauseOverlay.addEventListener("click", We, !1), A.focusBodyOnPageVisibilityChange && document.addEventListener("visibilitychange", At, !1);
+        window.addEventListener("resize", Rt, !1), A.touch && ye.bind(), A.keyboard && ce.bind(), A.progress && ge.bind(), A.respondToHashChanges && he.bind(), ue.bind(), fe.bind(), _.slides.addEventListener("click", St, !1), _.slides.addEventListener("transitionend", Et, !1), _.pauseOverlay.addEventListener("click", Ue, !1), A.focusBodyOnPageVisibilityChange && document.addEventListener("visibilitychange", At, !1);
     }
     function ke() {
-        ye.unbind(), fe.unbind(), ce.unbind(), ue.unbind(), ge.unbind(), he.unbind(), window.removeEventListener("resize", Rt, !1), _.slides.removeEventListener("click", St, !1), _.slides.removeEventListener("transitionend", Et, !1), _.pauseOverlay.removeEventListener("click", We, !1);
+        ye.unbind(), fe.unbind(), ce.unbind(), ue.unbind(), ge.unbind(), he.unbind(), window.removeEventListener("resize", Rt, !1), _.slides.removeEventListener("click", St, !1), _.slides.removeEventListener("transitionend", Et, !1), _.pauseOverlay.removeEventListener("click", Ue, !1);
     }
     function Le(e, t, i) {
         n.addEventListener(e, t, i);
@@ -2817,15 +2156,15 @@ function $(n, o) {
     function Ce(e, t, i) {
         n.removeEventListener(e, t, i);
     }
-    function Pe(e) {
-        "string" == typeof e.layout && (Y.layout = e.layout), "string" == typeof e.overview && (Y.overview = e.overview), Y.layout ? a(_.slides, Y.layout + " " + Y.overview) : a(_.slides, Y.overview);
+    function xe(e) {
+        "string" == typeof e.layout && (Y.layout = e.layout), "string" == typeof e.overview && (Y.overview = e.overview), Y.layout ? $ef6d0cb1bf5eee6a$var$a(_.slides, Y.layout + " " + Y.overview) : $ef6d0cb1bf5eee6a$var$a(_.slides, Y.overview);
     }
-    function xe({ target: t = _.wrapper, type: i, data: s, bubbles: a = !0 }) {
+    function Pe({ target: t = _.wrapper, type: i, data: s, bubbles: a = !0 }) {
         let n = document.createEvent("HTMLEvents", 1, 2);
-        return n.initEvent(i, a, !0), e(n, s), t.dispatchEvent(n), t === _.wrapper && Ne(i), n;
+        return n.initEvent(i, a, !0), $ef6d0cb1bf5eee6a$var$e(n, s), t.dispatchEvent(n), t === _.wrapper && Ne(i), n;
     }
     function Te(e) {
-        xe({
+        Pe({
             type: "slidechanged",
             data: {
                 indexh: c,
@@ -2843,26 +2182,26 @@ function $(n, o) {
                 eventName: t,
                 state: dt()
             };
-            e(s, i), window.parent.postMessage(JSON.stringify(s), "*");
+            $ef6d0cb1bf5eee6a$var$e(s, i), window.parent.postMessage(JSON.stringify(s), "*");
         }
     }
-    function Me() {
+    function Ie() {
         if (_.wrapper && !oe.isActive()) {
             const e = _.viewport.offsetWidth, t = _.viewport.offsetHeight;
             if (!A.disableLayout) {
-                u && !A.embedded && document.documentElement.style.setProperty("--vh", .01 * window.innerHeight + "px");
+                $ef6d0cb1bf5eee6a$var$u && !A.embedded && document.documentElement.style.setProperty("--vh", .01 * window.innerHeight + "px");
                 const i = re.isActive() ? Be(e, t) : Be(), s = X;
-                Ie(A.width, A.height), _.slides.style.width = i.width + "px", _.slides.style.height = i.height + "px", X = Math.min(i.presentationWidth / i.width, i.presentationHeight / i.height), X = Math.max(X, A.minScale), X = Math.min(X, A.maxScale), 1 === X || re.isActive() ? (_.slides.style.zoom = "", _.slides.style.left = "", _.slides.style.top = "", _.slides.style.bottom = "", _.slides.style.right = "", Pe({
+                Me(A.width, A.height), _.slides.style.width = i.width + "px", _.slides.style.height = i.height + "px", X = Math.min(i.presentationWidth / i.width, i.presentationHeight / i.height), X = Math.max(X, A.minScale), X = Math.min(X, A.maxScale), 1 === X || re.isActive() ? (_.slides.style.zoom = "", _.slides.style.left = "", _.slides.style.top = "", _.slides.style.bottom = "", _.slides.style.right = "", xe({
                     layout: ""
-                })) : (_.slides.style.zoom = "", _.slides.style.left = "50%", _.slides.style.top = "50%", _.slides.style.bottom = "auto", _.slides.style.right = "auto", Pe({
+                })) : (_.slides.style.zoom = "", _.slides.style.left = "50%", _.slides.style.top = "50%", _.slides.style.bottom = "auto", _.slides.style.right = "auto", xe({
                     layout: "translate(-50%, -50%) scale(" + X + ")"
                 }));
-                const a = Array.from(_.wrapper.querySelectorAll(m));
+                const a = Array.from(_.wrapper.querySelectorAll($ef6d0cb1bf5eee6a$var$m));
                 for(let e = 0, t = a.length; e < t; e++){
                     const t = a[e];
                     "none" !== t.style.display && (A.center || t.classList.contains("center") ? t.classList.contains("stack") ? t.style.top = 0 : t.style.top = Math.max((i.height - t.scrollHeight) / 2, 0) + "px" : t.style.top = "");
                 }
-                s !== X && xe({
+                s !== X && Pe({
                     type: "resize",
                     data: {
                         oldScale: s,
@@ -2879,8 +2218,8 @@ function $(n, o) {
             }(), _.viewport.style.setProperty("--slide-scale", X), _.viewport.style.setProperty("--viewport-width", e + "px"), _.viewport.style.setProperty("--viewport-height", t + "px"), re.layout(), ge.update(), ne.updateParallax(), de.isActive() && de.update();
         }
     }
-    function Ie(e, i) {
-        t(_.slides, "section > .stretch, section > .r-stretch").forEach((t)=>{
+    function Me(e, i) {
+        $ef6d0cb1bf5eee6a$var$t(_.slides, "section > .stretch, section > .r-stretch").forEach((t)=>{
             let s = ((e, t = 0)=>{
                 if (e) {
                     let i, s = e.style.height;
@@ -2927,28 +2266,28 @@ function $(n, o) {
     function Oe() {
         return !!v && !v.nextElementSibling && (!Fe(v) || !v.parentNode.nextElementSibling);
     }
-    function Ue() {
+    function Ve() {
         if (A.pause) {
             const e = _.wrapper.classList.contains("paused");
-            ht(), _.wrapper.classList.add("paused"), !1 === e && xe({
+            ht(), _.wrapper.classList.add("paused"), !1 === e && Pe({
                 type: "paused"
             });
         }
     }
-    function We() {
+    function Ue() {
         const e = _.wrapper.classList.contains("paused");
-        _.wrapper.classList.remove("paused"), ct(), e && xe({
+        _.wrapper.classList.remove("paused"), ct(), e && Pe({
             type: "resumed"
         });
     }
-    function Ve(e) {
-        "boolean" == typeof e ? e ? Ue() : We() : je() ? We() : Ue();
+    function We(e) {
+        "boolean" == typeof e ? e ? Ve() : Ue() : je() ? Ue() : Ve();
     }
     function je() {
         return _.wrapper.classList.contains("paused");
     }
     function Ke(e, i, s, a) {
-        if (xe({
+        if (Pe({
             type: "beforeslidechange",
             data: {
                 indexh: void 0 === e ? c : e,
@@ -2957,7 +2296,7 @@ function $(n, o) {
             }
         }).defaultPrevented) return;
         g = v;
-        const r = _.wrapper.querySelectorAll(f);
+        const r = _.wrapper.querySelectorAll($ef6d0cb1bf5eee6a$var$f);
         if (re.isActive()) {
             const t = re.getSlideByIndices(e, i);
             return void (t && re.scrollToSlide(t));
@@ -2967,14 +2306,14 @@ function $(n, o) {
         const o = $.concat();
         $.length = 0;
         let l = c || 0, d = h || 0;
-        c = _e(f, void 0 === e ? c : e), h = _e(y, void 0 === i ? h : i);
+        c = _e($ef6d0cb1bf5eee6a$var$f, void 0 === e ? c : e), h = _e($ef6d0cb1bf5eee6a$var$y, void 0 === i ? h : i);
         let u = c !== l || h !== d;
         u || (g = null);
         let p = r[c], m = p.querySelectorAll("section");
         n.classList.toggle("is-vertical-slide", m.length > 1), v = m[h] || p;
         let b = !1;
-        u && g && v && !de.isActive() && (J = "running", b = $e(g, v, l, d), b && _.slides.classList.add("disable-slide-transitions")), Qe(), Me(), de.isActive() && de.update(), void 0 !== s && le.goto(s), g && g !== v && (g.classList.remove("present"), g.setAttribute("aria-hidden", "true"), qe() && setTimeout(()=>{
-            t(_.wrapper, f + ".stack").forEach((e)=>{
+        u && g && v && !de.isActive() && (J = "running", b = $e(g, v, l, d), b && _.slides.classList.add("disable-slide-transitions")), Qe(), Ie(), de.isActive() && de.update(), void 0 !== s && le.goto(s), g && g !== v && (g.classList.remove("present"), g.setAttribute("aria-hidden", "true"), qe() && setTimeout(()=>{
+            $ef6d0cb1bf5eee6a$var$t(_.wrapper, $ef6d0cb1bf5eee6a$var$f + ".stack").forEach((e)=>{
                 He(e, 0);
             });
         }, 0));
@@ -2983,7 +2322,7 @@ function $(n, o) {
                 o.splice(t, 1);
                 continue e;
             }
-            _.viewport.classList.add($[e]), xe({
+            _.viewport.classList.add($[e]), Pe({
                 type: $[e]
             });
         }
@@ -2998,7 +2337,7 @@ function $(n, o) {
         return e.hasAttribute("data-auto-animate") && t.hasAttribute("data-auto-animate") && e.getAttribute("data-auto-animate-id") === t.getAttribute("data-auto-animate-id") && !(c > i || h > s ? t : e).hasAttribute("data-auto-animate-restart");
     }
     function Xe() {
-        ke(), Ae(), Me(), G = A.autoSlide, ct(), ne.create(), he.writeURL(), !0 === A.sortFragmentsOnSync && le.sortAll(), ue.update(), ge.update(), Qe(), be.update(), be.updateVisibility(), me.update(), ne.update(!0), ie.update(), te.formatEmbeddedContent(), !1 === A.autoPlayMedia ? te.stopEmbeddedContent(v, {
+        ke(), Ae(), Ie(), G = A.autoSlide, ct(), ne.create(), he.writeURL(), !0 === A.sortFragmentsOnSync && le.sortAll(), ue.update(), ge.update(), Qe(), be.update(), be.updateVisibility(), me.update(), ne.update(!0), ie.update(), te.formatEmbeddedContent(), !1 === A.autoPlayMedia ? te.stopEmbeddedContent(v, {
             unloadIframes: !1
         }) : te.startEmbeddedContent(v), de.isActive() && de.layout();
     }
@@ -3011,7 +2350,7 @@ function $(n, o) {
         });
     }
     function _e(e, i) {
-        let s = t(_.wrapper, e), a = s.length, n = re.isActive() || oe.isActive(), r = !1, o = !1;
+        let s = $ef6d0cb1bf5eee6a$var$t(_.wrapper, e), a = s.length, n = re.isActive() || oe.isActive(), r = !1, o = !1;
         if (a) {
             A.loop && (i >= a && (r = !0), (i %= a) < 0 && (i = a + i, o = !0)), i = Math.max(Math.min(i, a - 1), 0);
             for(let e = 0; e < a; e++){
@@ -3019,7 +2358,7 @@ function $(n, o) {
                 t.classList.remove("past"), t.classList.remove("present"), t.classList.remove("future"), t.setAttribute("hidden", ""), t.setAttribute("aria-hidden", "true"), t.querySelector("section") && t.classList.add("stack"), n ? t.classList.add("present") : e < i ? (t.classList.add(a ? "future" : "past"), A.fragments && Je(t)) : e > i ? (t.classList.add(a ? "past" : "future"), A.fragments && Ge(t)) : e === i && A.fragments && (r ? Ge(t) : o && Je(t));
             }
             let e = s[i], t = e.classList.contains("present");
-            e.classList.add("present"), e.removeAttribute("hidden"), e.removeAttribute("aria-hidden"), t || xe({
+            e.classList.add("present"), e.removeAttribute("hidden"), e.removeAttribute("aria-hidden"), t || Pe({
                 target: e,
                 type: "visible",
                 bubbles: !1
@@ -3030,12 +2369,12 @@ function $(n, o) {
         return i;
     }
     function Je(e) {
-        t(e, ".fragment").forEach((e)=>{
+        $ef6d0cb1bf5eee6a$var$t(e, ".fragment").forEach((e)=>{
             e.classList.add("visible"), e.classList.remove("current-fragment");
         });
     }
     function Ge(e) {
-        t(e, ".fragment.visible").forEach((e)=>{
+        $ef6d0cb1bf5eee6a$var$t(e, ".fragment.visible").forEach((e)=>{
             e.classList.remove("visible", "current-fragment");
         });
     }
@@ -3043,9 +2382,9 @@ function $(n, o) {
         let e, i, s = st(), a = s.length;
         if (a && void 0 !== c) {
             let n = de.isActive() ? 10 : A.viewDistance;
-            u && (n = de.isActive() ? 6 : A.mobileViewDistance), oe.isActive() && (n = Number.MAX_VALUE);
+            $ef6d0cb1bf5eee6a$var$u && (n = de.isActive() ? 6 : A.mobileViewDistance), oe.isActive() && (n = Number.MAX_VALUE);
             for(let r = 0; r < a; r++){
-                let o = s[r], l = t(o, "section"), d = l.length;
+                let o = s[r], l = $ef6d0cb1bf5eee6a$var$t(o, "section"), d = l.length;
                 if (e = Math.abs((c || 0) - r) || 0, A.loop && (e = Math.abs(((c || 0) - r) % (a - n)) || 0), e < n ? te.load(o) : te.unload(o), d) {
                     let t = De(o);
                     for(let s = 0; s < d; s++){
@@ -3058,7 +2397,7 @@ function $(n, o) {
         }
     }
     function Ze({ includeFragments: e = !1 } = {}) {
-        let t = _.wrapper.querySelectorAll(f), i = _.wrapper.querySelectorAll(y), s = {
+        let t = _.wrapper.querySelectorAll($ef6d0cb1bf5eee6a$var$f), i = _.wrapper.querySelectorAll($ef6d0cb1bf5eee6a$var$y), s = {
             left: c > 0,
             right: c < t.length - 1,
             up: h > 0,
@@ -3093,7 +2432,7 @@ function $(n, o) {
             if (re.isActive()) s = parseInt(e.getAttribute("data-index-h"), 10), e.getAttribute("data-index-v") && (a = parseInt(e.getAttribute("data-index-v"), 10));
             else {
                 let i = Fe(e), n = i ? e.parentNode : e, r = st();
-                s = Math.max(r.indexOf(n), 0), a = void 0, i && (a = Math.max(t(e.parentNode, "section").indexOf(e), 0));
+                s = Math.max(r.indexOf(n), 0), a = void 0, i && (a = Math.max($ef6d0cb1bf5eee6a$var$t(e.parentNode, "section").indexOf(e), 0));
             }
         }
         if (!e && v) {
@@ -3109,13 +2448,13 @@ function $(n, o) {
         };
     }
     function it() {
-        return t(_.wrapper, m + ':not(.stack):not([data-visibility="uncounted"])');
+        return $ef6d0cb1bf5eee6a$var$t(_.wrapper, $ef6d0cb1bf5eee6a$var$m + ':not(.stack):not([data-visibility="uncounted"])');
     }
     function st() {
-        return t(_.wrapper, f);
+        return $ef6d0cb1bf5eee6a$var$t(_.wrapper, $ef6d0cb1bf5eee6a$var$f);
     }
     function at() {
-        return t(_.wrapper, ".slides>section>section");
+        return $ef6d0cb1bf5eee6a$var$t(_.wrapper, ".slides>section>section");
     }
     function nt() {
         return st().length > 1;
@@ -3137,13 +2476,14 @@ function $(n, o) {
             indexv: e.v,
             indexf: e.f,
             paused: je(),
-            overview: de.isActive()
+            overview: de.isActive(),
+            ...me.getState()
         };
     }
     function ct() {
         if (ht(), v && !1 !== A.autoSlide) {
             let e = v.querySelector(".current-fragment[data-autoslide]"), i = e ? e.getAttribute("data-autoslide") : null, s = v.parentNode ? v.parentNode.getAttribute("data-autoslide") : null, a = v.getAttribute("data-autoslide");
-            i ? G = parseInt(i, 10) : a ? G = parseInt(a, 10) : s ? G = parseInt(s, 10) : (G = A.autoSlide, 0 === v.querySelectorAll(".fragment").length && t(v, "video, audio").forEach((e)=>{
+            i ? G = parseInt(i, 10) : a ? G = parseInt(a, 10) : s ? G = parseInt(s, 10) : (G = A.autoSlide, 0 === v.querySelectorAll(".fragment").length && $ef6d0cb1bf5eee6a$var$t(v, "video, audio").forEach((e)=>{
                 e.hasAttribute("data-autoplay") && G && 1e3 * e.duration / e.playbackRate > G && (G = 1e3 * e.duration / e.playbackRate + 1e3);
             })), !G || ee || je() || de.isActive() || Oe() && !le.availableRoutes().next && !0 !== A.loop || (Q = setTimeout(()=>{
                 "function" == typeof A.autoSlideMethod ? A.autoSlideMethod() : bt(), ct();
@@ -3154,12 +2494,12 @@ function $(n, o) {
         clearTimeout(Q), Q = -1;
     }
     function ut() {
-        G && !ee && (ee = !0, xe({
+        G && !ee && (ee = !0, Pe({
             type: "autoslidepaused"
         }), clearTimeout(Q), S && S.setPlaying(!1));
     }
     function gt() {
-        G && ee && (ee = !1, xe({
+        G && ee && (ee = !1, Pe({
             type: "autoslideresumed"
         }), ct());
     }
@@ -3187,7 +2527,7 @@ function $(n, o) {
             });
             else {
                 let i;
-                if (i = A.rtl ? t(_.wrapper, f + ".future").pop() : t(_.wrapper, f + ".past").pop(), i && i.classList.contains("stack")) {
+                if (i = A.rtl ? $ef6d0cb1bf5eee6a$var$t(_.wrapper, $ef6d0cb1bf5eee6a$var$f + ".future").pop() : $ef6d0cb1bf5eee6a$var$t(_.wrapper, $ef6d0cb1bf5eee6a$var$f + ".past").pop(), i && i.classList.contains("stack")) {
                     let e = i.querySelectorAll("section").length - 1 || void 0;
                     Ke(c - 1, e);
                 } else A.rtl ? pt({
@@ -3214,7 +2554,7 @@ function $(n, o) {
     function wt(e) {
         let t = e.data;
         if ("string" == typeof t && "{" === t.charAt(0) && "}" === t.charAt(t.length - 1) && (t = JSON.parse(t), t.method && "function" == typeof l[t.method])) {
-            if (!1 === b.test(t.method)) {
+            if (!1 === $ef6d0cb1bf5eee6a$var$b.test(t.method)) {
                 const e = l[t.method].apply(l, t.args);
                 Ne("callback", {
                     method: t.method,
@@ -3224,7 +2564,7 @@ function $(n, o) {
         }
     }
     function Et(e) {
-        "running" === J && /section/gi.test(e.target.nodeName) && (J = "idle", xe({
+        "running" === J && /section/gi.test(e.target.nodeName) && (J = "idle", Pe({
             type: "slidetransitionend",
             data: {
                 indexh: c,
@@ -3235,14 +2575,14 @@ function $(n, o) {
         }));
     }
     function St(e) {
-        const t = r(e.target, 'a[href^="#"]');
+        const t = $ef6d0cb1bf5eee6a$var$r(e.target, 'a[href^="#"]');
         if (t) {
             const i = t.getAttribute("href"), s = he.getIndicesFromHash(i);
             s && (l.slide(s.h, s.v, s.f), e.preventDefault());
         }
     }
     function Rt(e) {
-        Me();
+        Ie();
     }
     function At(e) {
         !1 === document.hidden && document.activeElement !== document.body && ("function" == typeof document.activeElement.blur && document.activeElement.blur(), document.body.focus());
@@ -3256,25 +2596,25 @@ function $(n, o) {
         Oe() && !1 === A.loop ? (Ke(0, 0), gt()) : ee ? gt() : ut();
     }
     const Ct = {
-        VERSION: K,
+        VERSION: $ef6d0cb1bf5eee6a$var$K,
         initialize: function(e) {
             if (!n) throw 'Unable to find presentation root (<div class="reveal">).';
             if (H) throw "Reveal.js has already been initialized.";
             if (H = !0, _.wrapper = n, _.slides = n.querySelector(".slides"), !_.slides) throw 'Unable to find slides container (<div class="slides">).';
             return A = {
-                ...j,
+                ...$ef6d0cb1bf5eee6a$var$j,
                 ...A,
                 ...o,
                 ...e,
-                ...d()
+                ...$ef6d0cb1bf5eee6a$var$d()
             }, /print-pdf/gi.test(window.location.search) && (A.view = "print"), function() {
-                !0 === A.embedded ? _.viewport = r(n, ".reveal-viewport") || n : (_.viewport = document.body, document.documentElement.classList.add("reveal-full-page"));
+                !0 === A.embedded ? _.viewport = $ef6d0cb1bf5eee6a$var$r(n, ".reveal-viewport") || n : (_.viewport = document.body, document.documentElement.classList.add("reveal-full-page"));
                 _.viewport.classList.add("reveal-viewport");
-            }(), window.addEventListener("load", Me, !1), pe.load(A.plugins, A.dependencies).then(we), new Promise((e)=>l.on("ready", e));
+            }(), window.addEventListener("load", Ie, !1), pe.load(A.plugins, A.dependencies).then(we), new Promise((e)=>l.on("ready", e));
         },
         configure: Re,
         destroy: function() {
-            H = !1, !1 !== q && (ke(), ht(), be.destroy(), fe.destroy(), me.destroy(), pe.destroy(), ve.destroy(), ue.destroy(), ge.destroy(), ne.destroy(), ie.destroy(), se.destroy(), document.removeEventListener("fullscreenchange", kt), document.removeEventListener("webkitfullscreenchange", kt), document.removeEventListener("visibilitychange", At, !1), window.removeEventListener("message", wt, !1), window.removeEventListener("load", Me, !1), _.pauseOverlay && _.pauseOverlay.remove(), _.statusElement && _.statusElement.remove(), document.documentElement.classList.remove("reveal-full-page"), _.wrapper.classList.remove("ready", "center", "has-horizontal-slides", "has-vertical-slides"), _.wrapper.removeAttribute("data-transition-speed"), _.wrapper.removeAttribute("data-background-transition"), _.viewport.classList.remove("reveal-viewport"), _.viewport.style.removeProperty("--slide-width"), _.viewport.style.removeProperty("--slide-height"), _.slides.style.removeProperty("width"), _.slides.style.removeProperty("height"), _.slides.style.removeProperty("zoom"), _.slides.style.removeProperty("left"), _.slides.style.removeProperty("top"), _.slides.style.removeProperty("bottom"), _.slides.style.removeProperty("right"), _.slides.style.removeProperty("transform"), Array.from(_.wrapper.querySelectorAll(m)).forEach((e)=>{
+            H = !1, !1 !== q && (ke(), ht(), be.destroy(), fe.destroy(), me.destroy(), pe.destroy(), ve.destroy(), ue.destroy(), ge.destroy(), ne.destroy(), ie.destroy(), se.destroy(), document.removeEventListener("fullscreenchange", kt), document.removeEventListener("webkitfullscreenchange", kt), document.removeEventListener("visibilitychange", At, !1), window.removeEventListener("message", wt, !1), window.removeEventListener("load", Ie, !1), _.pauseOverlay && _.pauseOverlay.remove(), _.statusElement && _.statusElement.remove(), document.documentElement.classList.remove("reveal-full-page"), _.wrapper.classList.remove("ready", "center", "has-horizontal-slides", "has-vertical-slides"), _.wrapper.removeAttribute("data-transition-speed"), _.wrapper.removeAttribute("data-background-transition"), _.viewport.classList.remove("reveal-viewport"), _.viewport.style.removeProperty("--slide-width"), _.viewport.style.removeProperty("--slide-height"), _.slides.style.removeProperty("width"), _.slides.style.removeProperty("height"), _.slides.style.removeProperty("zoom"), _.slides.style.removeProperty("left"), _.slides.style.removeProperty("top"), _.slides.style.removeProperty("bottom"), _.slides.style.removeProperty("right"), _.slides.style.removeProperty("transform"), Array.from(_.wrapper.querySelectorAll($ef6d0cb1bf5eee6a$var$m)).forEach((e)=>{
                 e.style.removeProperty("display"), e.style.removeProperty("top"), e.removeAttribute("hidden"), e.removeAttribute("aria-hidden");
             }));
         },
@@ -3303,14 +2643,14 @@ function $(n, o) {
         off: Ce,
         addEventListener: Le,
         removeEventListener: Ce,
-        layout: Me,
+        layout: Ie,
         shuffle: Ye,
         availableRoutes: Ze,
         availableFragments: le.availableRoutes.bind(le),
         toggleHelp: me.toggleHelp.bind(me),
         toggleOverview: de.toggle.bind(de),
         toggleScrollView: re.toggle.bind(re),
-        togglePause: Ve,
+        togglePause: We,
         toggleAutoSlide: function(e) {
             "boolean" == typeof e ? e ? gt() : ut() : ee ? gt() : ut();
         },
@@ -3341,19 +2681,20 @@ function $(n, o) {
         stopEmbeddedContent: ()=>te.stopEmbeddedContent(v, {
                 unloadIframes: !1
             }),
-        showIframePreview: me.showIframePreview.bind(me),
-        showMediaPreview: me.showMediaPreview.bind(me),
-        showPreview: me.showIframePreview.bind(me),
+        previewIframe: me.previewIframe.bind(me),
+        previewImage: me.previewImage.bind(me),
+        previewVideo: me.previewVideo.bind(me),
+        showPreview: me.previewIframe.bind(me),
         hidePreview: me.close.bind(me),
         addEventListeners: Ae,
         removeEventListeners: ke,
-        dispatchEvent: xe,
+        dispatchEvent: Pe,
         getState: dt,
         setState: function(e) {
             if ("object" == typeof e) {
-                Ke(s(e.indexh), s(e.indexv), s(e.indexf));
-                let t = s(e.paused), i = s(e.overview);
-                "boolean" == typeof t && t !== je() && Ve(t), "boolean" == typeof i && i !== de.isActive() && de.toggle(i);
+                Ke($ef6d0cb1bf5eee6a$var$s(e.indexh), $ef6d0cb1bf5eee6a$var$s(e.indexv), $ef6d0cb1bf5eee6a$var$s(e.indexf));
+                let t = $ef6d0cb1bf5eee6a$var$s(e.paused), i = $ef6d0cb1bf5eee6a$var$s(e.overview);
+                "boolean" == typeof t && t !== je() && We(t), "boolean" == typeof i && i !== de.isActive() && de.toggle(i), me.setState(e);
             }
         },
         getProgress: function() {
@@ -3411,7 +2752,7 @@ function $(n, o) {
         },
         getScale: ()=>X,
         getConfig: ()=>A,
-        getQueryHash: d,
+        getQueryHash: $ef6d0cb1bf5eee6a$var$d,
         getSlidePath: he.getHash.bind(he),
         getRevealElement: ()=>n,
         getSlidesElement: ()=>_.slides,
@@ -3422,7 +2763,7 @@ function $(n, o) {
         getPlugin: pe.getPlugin.bind(pe),
         getPlugins: pe.getRegisteredPlugins.bind(pe)
     };
-    return e(l, {
+    return $ef6d0cb1bf5eee6a$var$e(l, {
         ...Ct,
         announceStatus: Ee,
         getStatusText: Se,
@@ -3442,14 +2783,14 @@ function $(n, o) {
         },
         closeOverlay: me.close.bind(me),
         updateSlidesVisibility: Qe,
-        layoutSlideContents: Ie,
-        transformSlides: Pe,
+        layoutSlideContents: Me,
+        transformSlides: xe,
         cueAutoSlide: ct,
         cancelAutoSlide: ht
     }), Ct;
 }
-let X = $, Y = [];
-X.initialize = (e)=>(Object.assign(X, new $(document.querySelector(".reveal"), e)), Y.map((e)=>e(X)), X.initialize()), [
+let $ef6d0cb1bf5eee6a$export$2e2bcd8739ae039 = $ef6d0cb1bf5eee6a$var$$, $ef6d0cb1bf5eee6a$var$Y = [];
+$ef6d0cb1bf5eee6a$export$2e2bcd8739ae039.initialize = (e)=>(Object.assign($ef6d0cb1bf5eee6a$export$2e2bcd8739ae039, new $ef6d0cb1bf5eee6a$var$$(document.querySelector(".reveal"), e)), $ef6d0cb1bf5eee6a$var$Y.map((e)=>e($ef6d0cb1bf5eee6a$export$2e2bcd8739ae039)), $ef6d0cb1bf5eee6a$export$2e2bcd8739ae039.initialize()), [
     "configure",
     "on",
     "off",
@@ -3457,45 +2798,16 @@ X.initialize = (e)=>(Object.assign(X, new $(document.querySelector(".reveal"), e
     "removeEventListener",
     "registerPlugin"
 ].forEach((e)=>{
-    X[e] = (...t)=>{
-        Y.push((i)=>i[e].call(null, ...t));
+    $ef6d0cb1bf5eee6a$export$2e2bcd8739ae039[e] = (...t)=>{
+        $ef6d0cb1bf5eee6a$var$Y.push((i)=>i[e].call(null, ...t));
     };
-}), X.isReady = ()=>!1, X.VERSION = K;
+}), $ef6d0cb1bf5eee6a$export$2e2bcd8739ae039.isReady = ()=>!1, $ef6d0cb1bf5eee6a$export$2e2bcd8739ae039.VERSION = $ef6d0cb1bf5eee6a$var$K;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"jnFvT":[function(require,module,exports,__globalThis) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, '__esModule', {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === 'default' || key === '__esModule' || Object.prototype.hasOwnProperty.call(dest, key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
 
-},{}],"3xbDK":[function(require,module,exports,__globalThis) {
+var $d16eb09acf14544d$exports = {};
 !function(t, e) {
-    module.exports = e();
-}(this, function() {
+    $d16eb09acf14544d$exports = e();
+}($d16eb09acf14544d$exports, function() {
     "use strict";
     function t() {
         return {
@@ -4726,7 +4038,7 @@ exports.export = function(dest, destName, get) {
         function i() {
             if (n && !n.closed) n.focus();
             else {
-                if (n = window.open("about:blank", "reveal.js - Notes", "width=1100,height=700"), n.marked = N, n.document.write("<!--\n	NOTE: You need to build the notes plugin after making changes to this file.\n-->\n<html lang=\"en\">\n	<head>\n		<meta charset=\"utf-8\">\n\n		<title>reveal.js - Speaker View</title>\n\n		<style>\n			body {\n				font-family: Helvetica;\n				font-size: 18px;\n			}\n\n			#current-slide,\n			#upcoming-slide,\n			#speaker-controls {\n				padding: 6px;\n				box-sizing: border-box;\n				-moz-box-sizing: border-box;\n			}\n\n			#current-slide iframe,\n			#upcoming-slide iframe {\n				width: 100%;\n				height: 100%;\n				border: 1px solid #ddd;\n			}\n\n			#current-slide .label,\n			#upcoming-slide .label {\n				position: absolute;\n				top: 10px;\n				left: 10px;\n				z-index: 2;\n			}\n\n			#connection-status {\n				position: absolute;\n				top: 0;\n				left: 0;\n				width: 100%;\n				height: 100%;\n				z-index: 20;\n				padding: 30% 20% 20% 20%;\n				font-size: 18px;\n				color: #222;\n				background: #fff;\n				text-align: center;\n				box-sizing: border-box;\n				line-height: 1.4;\n			}\n\n			.overlay-element {\n				height: 34px;\n				line-height: 34px;\n				padding: 0 10px;\n				text-shadow: none;\n				background: rgba( 220, 220, 220, 0.8 );\n				color: #222;\n				font-size: 14px;\n			}\n\n			.overlay-element.interactive:hover {\n				background: rgba( 220, 220, 220, 1 );\n			}\n\n			#current-slide {\n				position: absolute;\n				width: 60%;\n				height: 100%;\n				top: 0;\n				left: 0;\n				padding-right: 0;\n			}\n\n			#upcoming-slide {\n				position: absolute;\n				width: 40%;\n				height: 40%;\n				right: 0;\n				top: 0;\n			}\n\n			/* Speaker controls */\n			#speaker-controls {\n				position: absolute;\n				top: 40%;\n				right: 0;\n				width: 40%;\n				height: 60%;\n				overflow: auto;\n				font-size: 18px;\n			}\n\n				.speaker-controls-time.hidden,\n				.speaker-controls-notes.hidden {\n					display: none;\n				}\n\n				.speaker-controls-time .label,\n				.speaker-controls-pace .label,\n				.speaker-controls-notes .label {\n					text-transform: uppercase;\n					font-weight: normal;\n					font-size: 0.66em;\n					color: #666;\n					margin: 0;\n				}\n\n				.speaker-controls-time, .speaker-controls-pace {\n					border-bottom: 1px solid rgba( 200, 200, 200, 0.5 );\n					margin-bottom: 10px;\n					padding: 10px 16px;\n					padding-bottom: 20px;\n					cursor: pointer;\n				}\n\n				.speaker-controls-time .reset-button {\n					opacity: 0;\n					float: right;\n					color: #666;\n					text-decoration: none;\n				}\n				.speaker-controls-time:hover .reset-button {\n					opacity: 1;\n				}\n\n				.speaker-controls-time .timer,\n				.speaker-controls-time .clock {\n					width: 50%;\n				}\n\n				.speaker-controls-time .timer,\n				.speaker-controls-time .clock,\n				.speaker-controls-time .pacing .hours-value,\n				.speaker-controls-time .pacing .minutes-value,\n				.speaker-controls-time .pacing .seconds-value {\n					font-size: 1.9em;\n				}\n\n				.speaker-controls-time .timer {\n					float: left;\n				}\n\n				.speaker-controls-time .clock {\n					float: right;\n					text-align: right;\n				}\n\n				.speaker-controls-time span.mute {\n					opacity: 0.3;\n				}\n\n				.speaker-controls-time .pacing-title {\n					margin-top: 5px;\n				}\n\n				.speaker-controls-time .pacing.ahead {\n					color: blue;\n				}\n\n				.speaker-controls-time .pacing.on-track {\n					color: green;\n				}\n\n				.speaker-controls-time .pacing.behind {\n					color: red;\n				}\n\n				.speaker-controls-notes {\n					padding: 10px 16px;\n				}\n\n				.speaker-controls-notes .value {\n					margin-top: 5px;\n					line-height: 1.4;\n					font-size: 1.2em;\n				}\n\n			/* Layout selector\xa0*/\n			#speaker-layout {\n				position: absolute;\n				top: 10px;\n				right: 10px;\n				color: #222;\n				z-index: 10;\n			}\n				#speaker-layout select {\n					position: absolute;\n					width: 100%;\n					height: 100%;\n					top: 0;\n					left: 0;\n					border: 0;\n					box-shadow: 0;\n					cursor: pointer;\n					opacity: 0;\n\n					font-size: 1em;\n					background-color: transparent;\n\n					-moz-appearance: none;\n					-webkit-appearance: none;\n					-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n				}\n\n				#speaker-layout select:focus {\n					outline: none;\n					box-shadow: none;\n				}\n\n			.clear {\n				clear: both;\n			}\n\n			/* Speaker layout: Wide */\n			body[data-speaker-layout=\"wide\"] #current-slide,\n			body[data-speaker-layout=\"wide\"] #upcoming-slide {\n				width: 50%;\n				height: 45%;\n				padding: 6px;\n			}\n\n			body[data-speaker-layout=\"wide\"] #current-slide {\n				top: 0;\n				left: 0;\n			}\n\n			body[data-speaker-layout=\"wide\"] #upcoming-slide {\n				top: 0;\n				left: 50%;\n			}\n\n			body[data-speaker-layout=\"wide\"] #speaker-controls {\n				top: 45%;\n				left: 0;\n				width: 100%;\n				height: 50%;\n				font-size: 1.25em;\n			}\n\n			/* Speaker layout: Tall */\n			body[data-speaker-layout=\"tall\"] #current-slide,\n			body[data-speaker-layout=\"tall\"] #upcoming-slide {\n				width: 45%;\n				height: 50%;\n				padding: 6px;\n			}\n\n			body[data-speaker-layout=\"tall\"] #current-slide {\n				top: 0;\n				left: 0;\n			}\n\n			body[data-speaker-layout=\"tall\"] #upcoming-slide {\n				top: 50%;\n				left: 0;\n			}\n\n			body[data-speaker-layout=\"tall\"] #speaker-controls {\n				padding-top: 40px;\n				top: 0;\n				left: 45%;\n				width: 55%;\n				height: 100%;\n				font-size: 1.25em;\n			}\n\n			/* Speaker layout: Notes only */\n			body[data-speaker-layout=\"notes-only\"] #current-slide,\n			body[data-speaker-layout=\"notes-only\"] #upcoming-slide {\n				display: none;\n			}\n\n			body[data-speaker-layout=\"notes-only\"] #speaker-controls {\n				padding-top: 40px;\n				top: 0;\n				left: 0;\n				width: 100%;\n				height: 100%;\n				font-size: 1.25em;\n			}\n\n			@media screen and (max-width: 1080px) {\n				body[data-speaker-layout=\"default\"] #speaker-controls {\n					font-size: 16px;\n				}\n			}\n\n			@media screen and (max-width: 900px) {\n				body[data-speaker-layout=\"default\"] #speaker-controls {\n					font-size: 14px;\n				}\n			}\n\n			@media screen and (max-width: 800px) {\n				body[data-speaker-layout=\"default\"] #speaker-controls {\n					font-size: 12px;\n				}\n			}\n\n		</style>\n	</head>\n\n	<body>\n\n		<div id=\"connection-status\">Loading speaker view...</div>\n\n		<div id=\"current-slide\"></div>\n		<div id=\"upcoming-slide\"><span class=\"overlay-element label\">Upcoming</span></div>\n		<div id=\"speaker-controls\">\n			<div class=\"speaker-controls-time\">\n				<h4 class=\"label\">Time <span class=\"reset-button\">Click to Reset</span></h4>\n				<div class=\"clock\">\n					<span class=\"clock-value\">0:00 AM</span>\n				</div>\n				<div class=\"timer\">\n					<span class=\"hours-value\">00</span><span class=\"minutes-value\">:00</span><span class=\"seconds-value\">:00</span>\n				</div>\n				<div class=\"clear\"></div>\n\n				<h4 class=\"label pacing-title\" style=\"display: none\">Pacing \u2013 Time to finish current slide</h4>\n				<div class=\"pacing\" style=\"display: none\">\n					<span class=\"hours-value\">00</span><span class=\"minutes-value\">:00</span><span class=\"seconds-value\">:00</span>\n				</div>\n			</div>\n\n			<div class=\"speaker-controls-notes hidden\">\n				<h4 class=\"label\">Notes</h4>\n				<div class=\"value\"></div>\n			</div>\n		</div>\n		<div id=\"speaker-layout\" class=\"overlay-element interactive\">\n			<span class=\"speaker-layout-label\"></span>\n			<select class=\"speaker-layout-dropdown\"></select>\n		</div>\n\n		<script>\n\n			(function() {\n\n				var notes,\n					notesValue,\n					currentState,\n					currentSlide,\n					upcomingSlide,\n					layoutLabel,\n					layoutDropdown,\n					pendingCalls = {},\n					lastRevealApiCallId = 0,\n					connected = false\n\n				var connectionStatus = document.querySelector( '#connection-status' );\n\n				var SPEAKER_LAYOUTS = {\n					'default': 'Default',\n					'wide': 'Wide',\n					'tall': 'Tall',\n					'notes-only': 'Notes only'\n				};\n\n				setupLayout();\n\n				let openerOrigin;\n\n				try {\n					openerOrigin = window.opener.location.origin;\n				}\n				catch ( error ) { console.warn( error ) }\n\n				// In order to prevent XSS, the speaker view will only run if its\n				// opener has the same origin as itself\n				if( window.location.origin !== openerOrigin ) {\n					connectionStatus.innerHTML = 'Cross origin error.<br>The speaker window can only be opened from the same origin.';\n					return;\n				}\n\n				var connectionTimeout = setTimeout( function() {\n					connectionStatus.innerHTML = 'Error connecting to main window.<br>Please try closing and reopening the speaker view.';\n				}, 5000 );\n\n				window.addEventListener( 'message', function( event ) {\n\n					// Validate the origin of all messages to avoid parsing messages\n					// that aren't meant for us. Ignore when running off file:// so\n					// that the speaker view continues to work without a web server.\n					if( window.location.origin !== event.origin && window.location.origin !== 'file://' ) {\n						return\n					}\n\n					clearTimeout( connectionTimeout );\n					connectionStatus.style.display = 'none';\n\n					var data = JSON.parse( event.data );\n\n					// The overview mode is only useful to the reveal.js instance\n					// where navigation occurs so we don't sync it\n					if( data.state ) delete data.state.overview;\n\n					// Messages sent by the notes plugin inside of the main window\n					if( data && data.namespace === 'reveal-notes' ) {\n						if( data.type === 'connect' ) {\n							handleConnectMessage( data );\n						}\n						else if( data.type === 'state' ) {\n							handleStateMessage( data );\n						}\n						else if( data.type === 'return' ) {\n							pendingCalls[data.callId](data.result);\n							delete pendingCalls[data.callId];\n						}\n					}\n					// Messages sent by the reveal.js inside of the current slide preview\n					else if( data && data.namespace === 'reveal' ) {\n						if( /ready/.test( data.eventName ) ) {\n							// Send a message back to notify that the handshake is complete\n							window.opener.postMessage( JSON.stringify({ namespace: 'reveal-notes', type: 'connected'} ), '*' );\n						}\n						else if( /slidechanged|fragmentshown|fragmenthidden|paused|resumed/.test( data.eventName ) && currentState !== JSON.stringify( data.state ) ) {\n\n							dispatchStateToMainWindow( data.state );\n\n						}\n					}\n\n				} );\n\n				/**\n				 * Updates the presentation in the main window to match the state\n				 * of the presentation in the notes window.\n				 */\n				const dispatchStateToMainWindow = debounce(( state ) => {\n					window.opener.postMessage( JSON.stringify({ method: 'setState', args: [ state ]} ), '*' );\n				}, 500);\n\n				/**\n				 * Asynchronously calls the Reveal.js API of the main frame.\n				 */\n				function callRevealApi( methodName, methodArguments, callback ) {\n\n					var callId = ++lastRevealApiCallId;\n					pendingCalls[callId] = callback;\n					window.opener.postMessage( JSON.stringify( {\n						namespace: 'reveal-notes',\n						type: 'call',\n						callId: callId,\n						methodName: methodName,\n						arguments: methodArguments\n					} ), '*' );\n\n				}\n\n				/**\n				 * Called when the main window is trying to establish a\n				 * connection.\n				 */\n				function handleConnectMessage( data ) {\n\n					if( connected === false ) {\n						connected = true;\n\n						setupIframes( data );\n						setupKeyboard();\n						setupNotes();\n						setupTimer();\n						setupHeartbeat();\n					}\n\n				}\n\n				/**\n				 * Called when the main window sends an updated state.\n				 */\n				function handleStateMessage( data ) {\n\n					// Store the most recently set state to avoid circular loops\n					// applying the same state\n					currentState = JSON.stringify( data.state );\n\n					// No need for updating the notes in case of fragment changes\n					if ( data.notes ) {\n						notes.classList.remove( 'hidden' );\n						notesValue.style.whiteSpace = data.whitespace;\n						if( data.markdown ) {\n							notesValue.innerHTML = marked( data.notes );\n						}\n						else {\n							notesValue.innerHTML = data.notes;\n						}\n					}\n					else {\n						notes.classList.add( 'hidden' );\n					}\n\n					// Update the note slides\n					currentSlide.contentWindow.postMessage( JSON.stringify({ method: 'setState', args: [ data.state ] }), '*' );\n					upcomingSlide.contentWindow.postMessage( JSON.stringify({ method: 'setState', args: [ data.state ] }), '*' );\n					upcomingSlide.contentWindow.postMessage( JSON.stringify({ method: 'next' }), '*' );\n\n				}\n\n				// Limit to max one state update per X ms\n				handleStateMessage = debounce( handleStateMessage, 200 );\n\n				/**\n				 * Forward keyboard events to the current slide window.\n				 * This enables keyboard events to work even if focus\n				 * isn't set on the current slide iframe.\n				 *\n				 * Block F5 default handling, it reloads and disconnects\n				 * the speaker notes window.\n				 */\n				function setupKeyboard() {\n\n					document.addEventListener( 'keydown', function( event ) {\n						if( event.keyCode === 116 || ( event.metaKey && event.keyCode === 82 ) ) {\n							event.preventDefault();\n							return false;\n						}\n						currentSlide.contentWindow.postMessage( JSON.stringify({ method: 'triggerKey', args: [ event.keyCode ] }), '*' );\n					} );\n\n				}\n\n				/**\n				 * Creates the preview iframes.\n				 */\n				function setupIframes( data ) {\n\n					var params = [\n						'receiver',\n						'progress=false',\n						'history=false',\n						'transition=none',\n						'autoSlide=0',\n						'backgroundTransition=none'\n					].join( '&' );\n\n					var urlSeparator = /\\?/.test(data.url) ? '&' : '?';\n					var hash = '#/' + data.state.indexh + '/' + data.state.indexv;\n					var currentURL = data.url + urlSeparator + params + '&scrollActivationWidth=false&postMessageEvents=true' + hash;\n					var upcomingURL = data.url + urlSeparator + params + '&scrollActivationWidth=false&controls=false' + hash;\n\n					currentSlide = document.createElement( 'iframe' );\n					currentSlide.setAttribute( 'width', 1280 );\n					currentSlide.setAttribute( 'height', 1024 );\n					currentSlide.setAttribute( 'src', currentURL );\n					document.querySelector( '#current-slide' ).appendChild( currentSlide );\n\n					upcomingSlide = document.createElement( 'iframe' );\n					upcomingSlide.setAttribute( 'width', 640 );\n					upcomingSlide.setAttribute( 'height', 512 );\n					upcomingSlide.setAttribute( 'src', upcomingURL );\n					document.querySelector( '#upcoming-slide' ).appendChild( upcomingSlide );\n\n				}\n\n				/**\n				 * Setup the notes UI.\n				 */\n				function setupNotes() {\n\n					notes = document.querySelector( '.speaker-controls-notes' );\n					notesValue = document.querySelector( '.speaker-controls-notes .value' );\n\n				}\n\n				/**\n				 * We send out a heartbeat at all times to ensure we can\n				 * reconnect with the main presentation window after reloads.\n				 */\n				function setupHeartbeat() {\n\n					setInterval( () => {\n						window.opener.postMessage( JSON.stringify({ namespace: 'reveal-notes', type: 'heartbeat'} ), '*' );\n					}, 1000 );\n\n				}\n\n				function getTimings( callback ) {\n\n					callRevealApi( 'getSlidesAttributes', [], function ( slideAttributes ) {\n						callRevealApi( 'getConfig', [], function ( config ) {\n							var totalTime = config.totalTime;\n							var minTimePerSlide = config.minimumTimePerSlide || 0;\n							var defaultTiming = config.defaultTiming;\n							if ((defaultTiming == null) && (totalTime == null)) {\n								callback(null);\n								return;\n							}\n							// Setting totalTime overrides defaultTiming\n							if (totalTime) {\n								defaultTiming = 0;\n							}\n							var timings = [];\n							for ( var i in slideAttributes ) {\n								var slide = slideAttributes[ i ];\n								var timing = defaultTiming;\n								if( slide.hasOwnProperty( 'data-timing' )) {\n									var t = slide[ 'data-timing' ];\n									timing = parseInt(t);\n									if( isNaN(timing) ) {\n										console.warn(\"Could not parse timing '\" + t + \"' of slide \" + i + \"; using default of \" + defaultTiming);\n										timing = defaultTiming;\n									}\n								}\n								timings.push(timing);\n							}\n							if ( totalTime ) {\n								// After we've allocated time to individual slides, we summarize it and\n								// subtract it from the total time\n								var remainingTime = totalTime - timings.reduce( function(a, b) { return a + b; }, 0 );\n								// The remaining time is divided by the number of slides that have 0 seconds\n								// allocated at the moment, giving the average time-per-slide on the remaining slides\n								var remainingSlides = (timings.filter( function(x) { return x == 0 }) ).length\n								var timePerSlide = Math.round( remainingTime / remainingSlides, 0 )\n								// And now we replace every zero-value timing with that average\n								timings = timings.map( function(x) { return (x==0 ? timePerSlide : x) } );\n							}\n							var slidesUnderMinimum = timings.filter( function(x) { return (x < minTimePerSlide) } ).length\n							if ( slidesUnderMinimum ) {\n								message = \"The pacing time for \" + slidesUnderMinimum + \" slide(s) is under the configured minimum of \" + minTimePerSlide + \" seconds. Check the data-timing attribute on individual slides, or consider increasing the totalTime or minimumTimePerSlide configuration options (or removing some slides).\";\n								alert(message);\n							}\n							callback( timings );\n						} );\n					} );\n\n				}\n\n				/**\n				 * Return the number of seconds allocated for presenting\n				 * all slides up to and including this one.\n				 */\n				function getTimeAllocated( timings, callback ) {\n\n					callRevealApi( 'getSlidePastCount', [], function ( currentSlide ) {\n						var allocated = 0;\n						for (var i in timings.slice(0, currentSlide + 1)) {\n							allocated += timings[i];\n						}\n						callback( allocated );\n					} );\n\n				}\n\n				/**\n				 * Create the timer and clock and start updating them\n				 * at an interval.\n				 */\n				function setupTimer() {\n\n					var start = new Date(),\n					timeEl = document.querySelector( '.speaker-controls-time' ),\n					clockEl = timeEl.querySelector( '.clock-value' ),\n					hoursEl = timeEl.querySelector( '.hours-value' ),\n					minutesEl = timeEl.querySelector( '.minutes-value' ),\n					secondsEl = timeEl.querySelector( '.seconds-value' ),\n					pacingTitleEl = timeEl.querySelector( '.pacing-title' ),\n					pacingEl = timeEl.querySelector( '.pacing' ),\n					pacingHoursEl = pacingEl.querySelector( '.hours-value' ),\n					pacingMinutesEl = pacingEl.querySelector( '.minutes-value' ),\n					pacingSecondsEl = pacingEl.querySelector( '.seconds-value' );\n\n					var timings = null;\n					getTimings( function ( _timings ) {\n\n						timings = _timings;\n						if (_timings !== null) {\n							pacingTitleEl.style.removeProperty('display');\n							pacingEl.style.removeProperty('display');\n						}\n\n						// Update once directly\n						_updateTimer();\n\n						// Then update every second\n						setInterval( _updateTimer, 1000 );\n\n					} );\n\n\n					function _resetTimer() {\n\n						if (timings == null) {\n							start = new Date();\n							_updateTimer();\n						}\n						else {\n							// Reset timer to beginning of current slide\n							getTimeAllocated( timings, function ( slideEndTimingSeconds ) {\n								var slideEndTiming = slideEndTimingSeconds * 1000;\n								callRevealApi( 'getSlidePastCount', [], function ( currentSlide ) {\n									var currentSlideTiming = timings[currentSlide] * 1000;\n									var previousSlidesTiming = slideEndTiming - currentSlideTiming;\n									var now = new Date();\n									start = new Date(now.getTime() - previousSlidesTiming);\n									_updateTimer();\n								} );\n							} );\n						}\n\n					}\n\n					timeEl.addEventListener( 'click', function() {\n						_resetTimer();\n						return false;\n					} );\n\n					function _displayTime( hrEl, minEl, secEl, time) {\n\n						var sign = Math.sign(time) == -1 ? \"-\" : \"\";\n						time = Math.abs(Math.round(time / 1000));\n						var seconds = time % 60;\n						var minutes = Math.floor( time / 60 ) % 60 ;\n						var hours = Math.floor( time / ( 60 * 60 )) ;\n						hrEl.innerHTML = sign + zeroPadInteger( hours );\n						if (hours == 0) {\n							hrEl.classList.add( 'mute' );\n						}\n						else {\n							hrEl.classList.remove( 'mute' );\n						}\n						minEl.innerHTML = ':' + zeroPadInteger( minutes );\n						if (hours == 0 && minutes == 0) {\n							minEl.classList.add( 'mute' );\n						}\n						else {\n							minEl.classList.remove( 'mute' );\n						}\n						secEl.innerHTML = ':' + zeroPadInteger( seconds );\n					}\n\n					function _updateTimer() {\n\n						var diff, hours, minutes, seconds,\n						now = new Date();\n\n						diff = now.getTime() - start.getTime();\n\n						clockEl.innerHTML = now.toLocaleTimeString( 'en-US', { hour12: true, hour: '2-digit', minute:'2-digit' } );\n						_displayTime( hoursEl, minutesEl, secondsEl, diff );\n						if (timings !== null) {\n							_updatePacing(diff);\n						}\n\n					}\n\n					function _updatePacing(diff) {\n\n						getTimeAllocated( timings, function ( slideEndTimingSeconds ) {\n							var slideEndTiming = slideEndTimingSeconds * 1000;\n\n							callRevealApi( 'getSlidePastCount', [], function ( currentSlide ) {\n								var currentSlideTiming = timings[currentSlide] * 1000;\n								var timeLeftCurrentSlide = slideEndTiming - diff;\n								if (timeLeftCurrentSlide < 0) {\n									pacingEl.className = 'pacing behind';\n								}\n								else if (timeLeftCurrentSlide < currentSlideTiming) {\n									pacingEl.className = 'pacing on-track';\n								}\n								else {\n									pacingEl.className = 'pacing ahead';\n								}\n								_displayTime( pacingHoursEl, pacingMinutesEl, pacingSecondsEl, timeLeftCurrentSlide );\n							} );\n						} );\n					}\n\n				}\n\n				/**\n				 * Sets up the speaker view layout and layout selector.\n				 */\n				function setupLayout() {\n\n					layoutDropdown = document.querySelector( '.speaker-layout-dropdown' );\n					layoutLabel = document.querySelector( '.speaker-layout-label' );\n\n					// Render the list of available layouts\n					for( var id in SPEAKER_LAYOUTS ) {\n						var option = document.createElement( 'option' );\n						option.setAttribute( 'value', id );\n						option.textContent = SPEAKER_LAYOUTS[ id ];\n						layoutDropdown.appendChild( option );\n					}\n\n					// Monitor the dropdown for changes\n					layoutDropdown.addEventListener( 'change', function( event ) {\n\n						setLayout( layoutDropdown.value );\n\n					}, false );\n\n					// Restore any currently persisted layout\n					setLayout( getLayout() );\n\n				}\n\n				/**\n				 * Sets a new speaker view layout. The layout is persisted\n				 * in local storage.\n				 */\n				function setLayout( value ) {\n\n					var title = SPEAKER_LAYOUTS[ value ];\n\n					layoutLabel.innerHTML = 'Layout' + ( title ? ( ': ' + title ) : '' );\n					layoutDropdown.value = value;\n\n					document.body.setAttribute( 'data-speaker-layout', value );\n\n					// Persist locally\n					if( supportsLocalStorage() ) {\n						window.localStorage.setItem( 'reveal-speaker-layout', value );\n					}\n\n				}\n\n				/**\n				 * Returns the ID of the most recently set speaker layout\n				 * or our default layout if none has been set.\n				 */\n				function getLayout() {\n\n					if( supportsLocalStorage() ) {\n						var layout = window.localStorage.getItem( 'reveal-speaker-layout' );\n						if( layout ) {\n							return layout;\n						}\n					}\n\n					// Default to the first record in the layouts hash\n					for( var id in SPEAKER_LAYOUTS ) {\n						return id;\n					}\n\n				}\n\n				function supportsLocalStorage() {\n\n					try {\n						localStorage.setItem('test', 'test');\n						localStorage.removeItem('test');\n						return true;\n					}\n					catch( e ) {\n						return false;\n					}\n\n				}\n\n				function zeroPadInteger( num ) {\n\n					var str = '00' + parseInt( num );\n					return str.substring( str.length - 2 );\n\n				}\n\n				/**\n				 * Limits the frequency at which a function can be called.\n				 */\n				function debounce( fn, ms ) {\n\n					var lastTime = 0,\n						timeout;\n\n					return function() {\n\n						var args = arguments;\n						var context = this;\n\n						clearTimeout( timeout );\n\n						var timeSinceLastCall = Date.now() - lastTime;\n						if( timeSinceLastCall > ms ) {\n							fn.apply( context, args );\n							lastTime = Date.now();\n						}\n						else {\n							timeout = setTimeout( function() {\n								fn.apply( context, args );\n								lastTime = Date.now();\n							}, ms - timeSinceLastCall );\n						}\n\n					}\n\n				}\n\n			})();\n\n		</script>\n	</body>\n</html>"), !n) return void alert("Speaker view popup failed to open. Please make sure popups are allowed and reopen the speaker view.");
+                if (n = window.open("about:blank", "reveal.js - Notes", "width=1100,height=700"), n.marked = N, n.document.write("<!--\n	NOTE: You need to build the notes plugin after making changes to this file.\n-->\n<html lang=\"en\">\n	<head>\n		<meta charset=\"utf-8\">\n\n		<title>reveal.js - Speaker View</title>\n\n		<style>\n			body {\n				font-family: Helvetica;\n				font-size: 18px;\n			}\n\n			#current-slide,\n			#upcoming-slide,\n			#speaker-controls {\n				padding: 6px;\n				box-sizing: border-box;\n				-moz-box-sizing: border-box;\n			}\n\n			#current-slide iframe,\n			#upcoming-slide iframe {\n				width: 100%;\n				height: 100%;\n				border: 1px solid #ddd;\n			}\n\n			#current-slide .label,\n			#upcoming-slide .label {\n				position: absolute;\n				top: 10px;\n				left: 10px;\n				z-index: 2;\n			}\n\n			#connection-status {\n				position: absolute;\n				top: 0;\n				left: 0;\n				width: 100%;\n				height: 100%;\n				z-index: 20;\n				padding: 30% 20% 20% 20%;\n				font-size: 18px;\n				color: #222;\n				background: #fff;\n				text-align: center;\n				box-sizing: border-box;\n				line-height: 1.4;\n			}\n\n			.overlay-element {\n				height: 34px;\n				line-height: 34px;\n				padding: 0 10px;\n				text-shadow: none;\n				background: rgba( 220, 220, 220, 0.8 );\n				color: #222;\n				font-size: 14px;\n			}\n\n			.overlay-element.interactive:hover {\n				background: rgba( 220, 220, 220, 1 );\n			}\n\n			#current-slide {\n				position: absolute;\n				width: 60%;\n				height: 100%;\n				top: 0;\n				left: 0;\n				padding-right: 0;\n			}\n\n			#upcoming-slide {\n				position: absolute;\n				width: 40%;\n				height: 40%;\n				right: 0;\n				top: 0;\n			}\n\n			/* Speaker controls */\n			#speaker-controls {\n				position: absolute;\n				top: 40%;\n				right: 0;\n				width: 40%;\n				height: 60%;\n				overflow: auto;\n				font-size: 18px;\n			}\n\n				.speaker-controls-time.hidden,\n				.speaker-controls-notes.hidden {\n					display: none;\n				}\n\n				.speaker-controls-time .label,\n				.speaker-controls-pace .label,\n				.speaker-controls-notes .label {\n					text-transform: uppercase;\n					font-weight: normal;\n					font-size: 0.66em;\n					color: #666;\n					margin: 0;\n				}\n\n				.speaker-controls-time, .speaker-controls-pace {\n					border-bottom: 1px solid rgba( 200, 200, 200, 0.5 );\n					margin-bottom: 10px;\n					padding: 10px 16px;\n					padding-bottom: 20px;\n					cursor: pointer;\n				}\n\n				.speaker-controls-time .reset-button {\n					opacity: 0;\n					float: right;\n					color: #666;\n					text-decoration: none;\n				}\n				.speaker-controls-time:hover .reset-button {\n					opacity: 1;\n				}\n\n				.speaker-controls-time .timer,\n				.speaker-controls-time .clock {\n					width: 50%;\n				}\n\n				.speaker-controls-time .timer,\n				.speaker-controls-time .clock,\n				.speaker-controls-time .pacing .hours-value,\n				.speaker-controls-time .pacing .minutes-value,\n				.speaker-controls-time .pacing .seconds-value {\n					font-size: 1.9em;\n				}\n\n				.speaker-controls-time .timer {\n					float: left;\n				}\n\n				.speaker-controls-time .clock {\n					float: right;\n					text-align: right;\n				}\n\n				.speaker-controls-time span.mute {\n					opacity: 0.3;\n				}\n\n				.speaker-controls-time .pacing-title {\n					margin-top: 5px;\n				}\n\n				.speaker-controls-time .pacing.ahead {\n					color: blue;\n				}\n\n				.speaker-controls-time .pacing.on-track {\n					color: green;\n				}\n\n				.speaker-controls-time .pacing.behind {\n					color: red;\n				}\n\n				.speaker-controls-notes {\n					padding: 10px 16px;\n				}\n\n				.speaker-controls-notes .value {\n					margin-top: 5px;\n					line-height: 1.4;\n					font-size: 1.2em;\n				}\n\n			/* Layout selector\xa0*/\n			#speaker-layout {\n				position: absolute;\n				top: 10px;\n				right: 10px;\n				color: #222;\n				z-index: 10;\n			}\n				#speaker-layout select {\n					position: absolute;\n					width: 100%;\n					height: 100%;\n					top: 0;\n					left: 0;\n					border: 0;\n					box-shadow: 0;\n					cursor: pointer;\n					opacity: 0;\n\n					font-size: 1em;\n					background-color: transparent;\n\n					-moz-appearance: none;\n					-webkit-appearance: none;\n					-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n				}\n\n				#speaker-layout select:focus {\n					outline: none;\n					box-shadow: none;\n				}\n\n			.clear {\n				clear: both;\n			}\n\n			/* Speaker layout: Wide */\n			body[data-speaker-layout=\"wide\"] #current-slide,\n			body[data-speaker-layout=\"wide\"] #upcoming-slide {\n				width: 50%;\n				height: 45%;\n				padding: 6px;\n			}\n\n			body[data-speaker-layout=\"wide\"] #current-slide {\n				top: 0;\n				left: 0;\n			}\n\n			body[data-speaker-layout=\"wide\"] #upcoming-slide {\n				top: 0;\n				left: 50%;\n			}\n\n			body[data-speaker-layout=\"wide\"] #speaker-controls {\n				top: 45%;\n				left: 0;\n				width: 100%;\n				height: 50%;\n				font-size: 1.25em;\n			}\n\n			/* Speaker layout: Tall */\n			body[data-speaker-layout=\"tall\"] #current-slide,\n			body[data-speaker-layout=\"tall\"] #upcoming-slide {\n				width: 45%;\n				height: 50%;\n				padding: 6px;\n			}\n\n			body[data-speaker-layout=\"tall\"] #current-slide {\n				top: 0;\n				left: 0;\n			}\n\n			body[data-speaker-layout=\"tall\"] #upcoming-slide {\n				top: 50%;\n				left: 0;\n			}\n\n			body[data-speaker-layout=\"tall\"] #speaker-controls {\n				padding-top: 40px;\n				top: 0;\n				left: 45%;\n				width: 55%;\n				height: 100%;\n				font-size: 1.25em;\n			}\n\n			/* Speaker layout: Notes only */\n			body[data-speaker-layout=\"notes-only\"] #current-slide,\n			body[data-speaker-layout=\"notes-only\"] #upcoming-slide {\n				display: none;\n			}\n\n			body[data-speaker-layout=\"notes-only\"] #speaker-controls {\n				padding-top: 40px;\n				top: 0;\n				left: 0;\n				width: 100%;\n				height: 100%;\n				font-size: 1.25em;\n			}\n\n			@media screen and (max-width: 1080px) {\n				body[data-speaker-layout=\"default\"] #speaker-controls {\n					font-size: 16px;\n				}\n			}\n\n			@media screen and (max-width: 900px) {\n				body[data-speaker-layout=\"default\"] #speaker-controls {\n					font-size: 14px;\n				}\n			}\n\n			@media screen and (max-width: 800px) {\n				body[data-speaker-layout=\"default\"] #speaker-controls {\n					font-size: 12px;\n				}\n			}\n\n		</style>\n	</head>\n\n	<body>\n\n		<div id=\"connection-status\">Loading speaker view...</div>\n\n		<div id=\"current-slide\"></div>\n		<div id=\"upcoming-slide\"><span class=\"overlay-element label\">Upcoming</span></div>\n		<div id=\"speaker-controls\">\n			<div class=\"speaker-controls-time\">\n				<h4 class=\"label\">Time <span class=\"reset-button\">Click to Reset</span></h4>\n				<div class=\"clock\">\n					<span class=\"clock-value\">0:00 AM</span>\n				</div>\n				<div class=\"timer\">\n					<span class=\"hours-value\">00</span><span class=\"minutes-value\">:00</span><span class=\"seconds-value\">:00</span>\n				</div>\n				<div class=\"clear\"></div>\n\n				<h4 class=\"label pacing-title\" style=\"display: none\">Pacing \u2013 Time to finish current slide</h4>\n				<div class=\"pacing\" style=\"display: none\">\n					<span class=\"hours-value\">00</span><span class=\"minutes-value\">:00</span><span class=\"seconds-value\">:00</span>\n				</div>\n			</div>\n\n			<div class=\"speaker-controls-notes hidden\">\n				<h4 class=\"label\">Notes</h4>\n				<div class=\"value\"></div>\n			</div>\n		</div>\n		<div id=\"speaker-layout\" class=\"overlay-element interactive\">\n			<span class=\"speaker-layout-label\"></span>\n			<select class=\"speaker-layout-dropdown\"></select>\n		</div>\n\n		<script>\n\n			(function() {\n\n				var notes,\n					notesValue,\n					currentState,\n					currentSlide,\n					upcomingSlide,\n					layoutLabel,\n					layoutDropdown,\n					pendingCalls = {},\n					lastRevealApiCallId = 0,\n					connected = false\n\n				var connectionStatus = document.querySelector( '#connection-status' );\n\n				var SPEAKER_LAYOUTS = {\n					'default': 'Default',\n					'wide': 'Wide',\n					'tall': 'Tall',\n					'notes-only': 'Notes only'\n				};\n\n				setupLayout();\n\n				let openerOrigin;\n\n				try {\n					openerOrigin = window.opener.location.origin;\n				}\n				catch ( error ) { console.warn( error ) }\n\n				// In order to prevent XSS, the speaker view will only run if its\n				// opener has the same origin as itself\n				if( window.location.origin !== openerOrigin ) {\n					connectionStatus.innerHTML = 'Cross origin error.<br>The speaker window can only be opened from the same origin.';\n					return;\n				}\n\n				var connectionTimeout = setTimeout( function() {\n					connectionStatus.innerHTML = 'Error connecting to main window.<br>Please try closing and reopening the speaker view.';\n				}, 5000 );\n\n				window.addEventListener( 'message', function( event ) {\n\n					// Validate the origin of all messages to avoid parsing messages\n					// that aren't meant for us. Ignore when running off file:// so\n					// that the speaker view continues to work without a web server.\n					if( window.location.origin !== event.origin && window.location.origin !== 'file://' ) {\n						return\n					}\n\n					clearTimeout( connectionTimeout );\n					connectionStatus.style.display = 'none';\n\n					var data = JSON.parse( event.data );\n\n					// The overview mode is only useful to the reveal.js instance\n					// where navigation occurs so we don't sync it\n					if( data.state ) delete data.state.overview;\n\n					// Messages sent by the notes plugin inside of the main window\n					if( data && data.namespace === 'reveal-notes' ) {\n						if( data.type === 'connect' ) {\n							handleConnectMessage( data );\n						}\n						else if( data.type === 'state' ) {\n							handleStateMessage( data );\n						}\n						else if( data.type === 'return' ) {\n							pendingCalls[data.callId](data.result);\n							delete pendingCalls[data.callId];\n						}\n					}\n					// Messages sent by the reveal.js inside of the current slide preview\n					else if( data && data.namespace === 'reveal' ) {\n						const supportedEvents = [\n							'slidechanged',\n							'fragmentshown',\n							'fragmenthidden',\n							'paused',\n							'resumed',\n							'previewiframe',\n							'previewimage',\n							'previewvideo',\n							'closeoverlay'\n						];\n\n						if( /ready/.test( data.eventName ) ) {\n							// Send a message back to notify that the handshake is complete\n							window.opener.postMessage( JSON.stringify({ namespace: 'reveal-notes', type: 'connected'} ), '*' );\n						}\n						else if( supportedEvents.includes( data.eventName ) && currentState !== JSON.stringify( data.state ) ) {\n							dispatchStateToMainWindow( data.state );\n						}\n					}\n\n				} );\n\n				/**\n				 * Updates the presentation in the main window to match the state\n				 * of the presentation in the notes window.\n				 */\n				const dispatchStateToMainWindow = debounce(( state ) => {\n					window.opener.postMessage( JSON.stringify({ method: 'setState', args: [ state ]} ), '*' );\n				}, 500);\n\n				/**\n				 * Asynchronously calls the Reveal.js API of the main frame.\n				 */\n				function callRevealApi( methodName, methodArguments, callback ) {\n\n					var callId = ++lastRevealApiCallId;\n					pendingCalls[callId] = callback;\n					window.opener.postMessage( JSON.stringify( {\n						namespace: 'reveal-notes',\n						type: 'call',\n						callId: callId,\n						methodName: methodName,\n						arguments: methodArguments\n					} ), '*' );\n\n				}\n\n				/**\n				 * Called when the main window is trying to establish a\n				 * connection.\n				 */\n				function handleConnectMessage( data ) {\n\n					if( connected === false ) {\n						connected = true;\n\n						setupIframes( data );\n						setupKeyboard();\n						setupNotes();\n						setupTimer();\n						setupHeartbeat();\n					}\n\n				}\n\n				/**\n				 * Called when the main window sends an updated state.\n				 */\n				function handleStateMessage( data ) {\n\n					// Store the most recently set state to avoid circular loops\n					// applying the same state\n					currentState = JSON.stringify( data.state );\n\n					// No need for updating the notes in case of fragment changes\n					if ( data.notes ) {\n						notes.classList.remove( 'hidden' );\n						notesValue.style.whiteSpace = data.whitespace;\n						if( data.markdown ) {\n							notesValue.innerHTML = marked( data.notes );\n						}\n						else {\n							notesValue.innerHTML = data.notes;\n						}\n					}\n					else {\n						notes.classList.add( 'hidden' );\n					}\n\n					// Don't show lightboxes in the upcoming slide\n					const { previewVideo, previewImage, previewIframe, ...upcomingState } = data.state;\n\n					// Update the note slides\n					currentSlide.contentWindow.postMessage( JSON.stringify({ method: 'setState', args: [ data.state ] }), '*' );\n					upcomingSlide.contentWindow.postMessage( JSON.stringify({ method: 'setState', args: [ upcomingState ] }), '*' );\n					upcomingSlide.contentWindow.postMessage( JSON.stringify({ method: 'next' }), '*' );\n\n				}\n\n				// Limit to max one state update per X ms\n				handleStateMessage = debounce( handleStateMessage, 200 );\n\n				/**\n				 * Forward keyboard events to the current slide window.\n				 * This enables keyboard events to work even if focus\n				 * isn't set on the current slide iframe.\n				 *\n				 * Block F5 default handling, it reloads and disconnects\n				 * the speaker notes window.\n				 */\n				function setupKeyboard() {\n\n					document.addEventListener( 'keydown', function( event ) {\n						if( event.keyCode === 116 || ( event.metaKey && event.keyCode === 82 ) ) {\n							event.preventDefault();\n							return false;\n						}\n						currentSlide.contentWindow.postMessage( JSON.stringify({ method: 'triggerKey', args: [ event.keyCode ] }), '*' );\n					} );\n\n				}\n\n				/**\n				 * Creates the preview iframes.\n				 */\n				function setupIframes( data ) {\n\n					var params = [\n						'receiver',\n						'progress=false',\n						'history=false',\n						'transition=none',\n						'autoSlide=0',\n						'backgroundTransition=none'\n					].join( '&' );\n\n					var urlSeparator = /\\?/.test(data.url) ? '&' : '?';\n					var hash = '#/' + data.state.indexh + '/' + data.state.indexv;\n					var currentURL = data.url + urlSeparator + params + '&scrollActivationWidth=false&postMessageEvents=true' + hash;\n					var upcomingURL = data.url + urlSeparator + params + '&scrollActivationWidth=false&controls=false' + hash;\n\n					currentSlide = document.createElement( 'iframe' );\n					currentSlide.setAttribute( 'width', 1280 );\n					currentSlide.setAttribute( 'height', 1024 );\n					currentSlide.setAttribute( 'src', currentURL );\n					document.querySelector( '#current-slide' ).appendChild( currentSlide );\n\n					upcomingSlide = document.createElement( 'iframe' );\n					upcomingSlide.setAttribute( 'width', 640 );\n					upcomingSlide.setAttribute( 'height', 512 );\n					upcomingSlide.setAttribute( 'src', upcomingURL );\n					document.querySelector( '#upcoming-slide' ).appendChild( upcomingSlide );\n\n				}\n\n				/**\n				 * Setup the notes UI.\n				 */\n				function setupNotes() {\n\n					notes = document.querySelector( '.speaker-controls-notes' );\n					notesValue = document.querySelector( '.speaker-controls-notes .value' );\n\n				}\n\n				/**\n				 * We send out a heartbeat at all times to ensure we can\n				 * reconnect with the main presentation window after reloads.\n				 */\n				function setupHeartbeat() {\n\n					setInterval( () => {\n						window.opener.postMessage( JSON.stringify({ namespace: 'reveal-notes', type: 'heartbeat'} ), '*' );\n					}, 1000 );\n\n				}\n\n				function getTimings( callback ) {\n\n					callRevealApi( 'getSlidesAttributes', [], function ( slideAttributes ) {\n						callRevealApi( 'getConfig', [], function ( config ) {\n							var totalTime = config.totalTime;\n							var minTimePerSlide = config.minimumTimePerSlide || 0;\n							var defaultTiming = config.defaultTiming;\n							if ((defaultTiming == null) && (totalTime == null)) {\n								callback(null);\n								return;\n							}\n							// Setting totalTime overrides defaultTiming\n							if (totalTime) {\n								defaultTiming = 0;\n							}\n							var timings = [];\n							for ( var i in slideAttributes ) {\n								var slide = slideAttributes[ i ];\n								var timing = defaultTiming;\n								if( slide.hasOwnProperty( 'data-timing' )) {\n									var t = slide[ 'data-timing' ];\n									timing = parseInt(t);\n									if( isNaN(timing) ) {\n										console.warn(\"Could not parse timing '\" + t + \"' of slide \" + i + \"; using default of \" + defaultTiming);\n										timing = defaultTiming;\n									}\n								}\n								timings.push(timing);\n							}\n							if ( totalTime ) {\n								// After we've allocated time to individual slides, we summarize it and\n								// subtract it from the total time\n								var remainingTime = totalTime - timings.reduce( function(a, b) { return a + b; }, 0 );\n								// The remaining time is divided by the number of slides that have 0 seconds\n								// allocated at the moment, giving the average time-per-slide on the remaining slides\n								var remainingSlides = (timings.filter( function(x) { return x == 0 }) ).length\n								var timePerSlide = Math.round( remainingTime / remainingSlides, 0 )\n								// And now we replace every zero-value timing with that average\n								timings = timings.map( function(x) { return (x==0 ? timePerSlide : x) } );\n							}\n							var slidesUnderMinimum = timings.filter( function(x) { return (x < minTimePerSlide) } ).length\n							if ( slidesUnderMinimum ) {\n								message = \"The pacing time for \" + slidesUnderMinimum + \" slide(s) is under the configured minimum of \" + minTimePerSlide + \" seconds. Check the data-timing attribute on individual slides, or consider increasing the totalTime or minimumTimePerSlide configuration options (or removing some slides).\";\n								alert(message);\n							}\n							callback( timings );\n						} );\n					} );\n\n				}\n\n				/**\n				 * Return the number of seconds allocated for presenting\n				 * all slides up to and including this one.\n				 */\n				function getTimeAllocated( timings, callback ) {\n\n					callRevealApi( 'getSlidePastCount', [], function ( currentSlide ) {\n						var allocated = 0;\n						for (var i in timings.slice(0, currentSlide + 1)) {\n							allocated += timings[i];\n						}\n						callback( allocated );\n					} );\n\n				}\n\n				/**\n				 * Create the timer and clock and start updating them\n				 * at an interval.\n				 */\n				function setupTimer() {\n\n					var start = new Date(),\n					timeEl = document.querySelector( '.speaker-controls-time' ),\n					clockEl = timeEl.querySelector( '.clock-value' ),\n					hoursEl = timeEl.querySelector( '.hours-value' ),\n					minutesEl = timeEl.querySelector( '.minutes-value' ),\n					secondsEl = timeEl.querySelector( '.seconds-value' ),\n					pacingTitleEl = timeEl.querySelector( '.pacing-title' ),\n					pacingEl = timeEl.querySelector( '.pacing' ),\n					pacingHoursEl = pacingEl.querySelector( '.hours-value' ),\n					pacingMinutesEl = pacingEl.querySelector( '.minutes-value' ),\n					pacingSecondsEl = pacingEl.querySelector( '.seconds-value' );\n\n					var timings = null;\n					getTimings( function ( _timings ) {\n\n						timings = _timings;\n						if (_timings !== null) {\n							pacingTitleEl.style.removeProperty('display');\n							pacingEl.style.removeProperty('display');\n						}\n\n						// Update once directly\n						_updateTimer();\n\n						// Then update every second\n						setInterval( _updateTimer, 1000 );\n\n					} );\n\n\n					function _resetTimer() {\n\n						if (timings == null) {\n							start = new Date();\n							_updateTimer();\n						}\n						else {\n							// Reset timer to beginning of current slide\n							getTimeAllocated( timings, function ( slideEndTimingSeconds ) {\n								var slideEndTiming = slideEndTimingSeconds * 1000;\n								callRevealApi( 'getSlidePastCount', [], function ( currentSlide ) {\n									var currentSlideTiming = timings[currentSlide] * 1000;\n									var previousSlidesTiming = slideEndTiming - currentSlideTiming;\n									var now = new Date();\n									start = new Date(now.getTime() - previousSlidesTiming);\n									_updateTimer();\n								} );\n							} );\n						}\n\n					}\n\n					timeEl.addEventListener( 'click', function() {\n						_resetTimer();\n						return false;\n					} );\n\n					function _displayTime( hrEl, minEl, secEl, time) {\n\n						var sign = Math.sign(time) == -1 ? \"-\" : \"\";\n						time = Math.abs(Math.round(time / 1000));\n						var seconds = time % 60;\n						var minutes = Math.floor( time / 60 ) % 60 ;\n						var hours = Math.floor( time / ( 60 * 60 )) ;\n						hrEl.innerHTML = sign + zeroPadInteger( hours );\n						if (hours == 0) {\n							hrEl.classList.add( 'mute' );\n						}\n						else {\n							hrEl.classList.remove( 'mute' );\n						}\n						minEl.innerHTML = ':' + zeroPadInteger( minutes );\n						if (hours == 0 && minutes == 0) {\n							minEl.classList.add( 'mute' );\n						}\n						else {\n							minEl.classList.remove( 'mute' );\n						}\n						secEl.innerHTML = ':' + zeroPadInteger( seconds );\n					}\n\n					function _updateTimer() {\n\n						var diff, hours, minutes, seconds,\n						now = new Date();\n\n						diff = now.getTime() - start.getTime();\n\n						clockEl.innerHTML = now.toLocaleTimeString( 'en-US', { hour12: true, hour: '2-digit', minute:'2-digit' } );\n						_displayTime( hoursEl, minutesEl, secondsEl, diff );\n						if (timings !== null) {\n							_updatePacing(diff);\n						}\n\n					}\n\n					function _updatePacing(diff) {\n\n						getTimeAllocated( timings, function ( slideEndTimingSeconds ) {\n							var slideEndTiming = slideEndTimingSeconds * 1000;\n\n							callRevealApi( 'getSlidePastCount', [], function ( currentSlide ) {\n								var currentSlideTiming = timings[currentSlide] * 1000;\n								var timeLeftCurrentSlide = slideEndTiming - diff;\n								if (timeLeftCurrentSlide < 0) {\n									pacingEl.className = 'pacing behind';\n								}\n								else if (timeLeftCurrentSlide < currentSlideTiming) {\n									pacingEl.className = 'pacing on-track';\n								}\n								else {\n									pacingEl.className = 'pacing ahead';\n								}\n								_displayTime( pacingHoursEl, pacingMinutesEl, pacingSecondsEl, timeLeftCurrentSlide );\n							} );\n						} );\n					}\n\n				}\n\n				/**\n				 * Sets up the speaker view layout and layout selector.\n				 */\n				function setupLayout() {\n\n					layoutDropdown = document.querySelector( '.speaker-layout-dropdown' );\n					layoutLabel = document.querySelector( '.speaker-layout-label' );\n\n					// Render the list of available layouts\n					for( var id in SPEAKER_LAYOUTS ) {\n						var option = document.createElement( 'option' );\n						option.setAttribute( 'value', id );\n						option.textContent = SPEAKER_LAYOUTS[ id ];\n						layoutDropdown.appendChild( option );\n					}\n\n					// Monitor the dropdown for changes\n					layoutDropdown.addEventListener( 'change', function( event ) {\n\n						setLayout( layoutDropdown.value );\n\n					}, false );\n\n					// Restore any currently persisted layout\n					setLayout( getLayout() );\n\n				}\n\n				/**\n				 * Sets a new speaker view layout. The layout is persisted\n				 * in local storage.\n				 */\n				function setLayout( value ) {\n\n					var title = SPEAKER_LAYOUTS[ value ];\n\n					layoutLabel.innerHTML = 'Layout' + ( title ? ( ': ' + title ) : '' );\n					layoutDropdown.value = value;\n\n					document.body.setAttribute( 'data-speaker-layout', value );\n\n					// Persist locally\n					if( supportsLocalStorage() ) {\n						window.localStorage.setItem( 'reveal-speaker-layout', value );\n					}\n\n				}\n\n				/**\n				 * Returns the ID of the most recently set speaker layout\n				 * or our default layout if none has been set.\n				 */\n				function getLayout() {\n\n					if( supportsLocalStorage() ) {\n						var layout = window.localStorage.getItem( 'reveal-speaker-layout' );\n						if( layout ) {\n							return layout;\n						}\n					}\n\n					// Default to the first record in the layouts hash\n					for( var id in SPEAKER_LAYOUTS ) {\n						return id;\n					}\n\n				}\n\n				function supportsLocalStorage() {\n\n					try {\n						localStorage.setItem('test', 'test');\n						localStorage.removeItem('test');\n						return true;\n					}\n					catch( e ) {\n						return false;\n					}\n\n				}\n\n				function zeroPadInteger( num ) {\n\n					var str = '00' + parseInt( num );\n					return str.substring( str.length - 2 );\n\n				}\n\n				/**\n				 * Limits the frequency at which a function can be called.\n				 */\n				function debounce( fn, ms ) {\n\n					var lastTime = 0,\n						timeout;\n\n					return function() {\n\n						var args = arguments;\n						var context = this;\n\n						clearTimeout( timeout );\n\n						var timeSinceLastCall = Date.now() - lastTime;\n						if( timeSinceLastCall > ms ) {\n							fn.apply( context, args );\n							lastTime = Date.now();\n						}\n						else {\n							timeout = setTimeout( function() {\n								fn.apply( context, args );\n								lastTime = Date.now();\n							}, ms - timeSinceLastCall );\n						}\n\n					}\n\n				}\n\n			})();\n\n		</script>\n	</body>\n</html>"), !n) return void alert("Speaker view popup failed to open. Please make sure popups are allowed and reopen the speaker view.");
                 !function() {
                     const i = e.getConfig().url, s = "string" == typeof i ? i : window.location.protocol + "//" + window.location.host + window.location.pathname + window.location.search;
                     t = setInterval(function() {
@@ -4776,7 +4088,7 @@ exports.export = function(dest, destName, get) {
             } catch (t) {}
         }
         function a() {
-            e.on("slidechanged", s), e.on("fragmentshown", s), e.on("fragmenthidden", s), e.on("overviewhidden", s), e.on("overviewshown", s), e.on("paused", s), e.on("resumed", s), s();
+            e.on("slidechanged", s), e.on("fragmentshown", s), e.on("fragmenthidden", s), e.on("overviewhidden", s), e.on("overviewshown", s), e.on("paused", s), e.on("resumed", s), e.on("previewiframe", s), e.on("previewimage", s), e.on("previewvideo", s), e.on("closeoverlay", s), s();
         }
         return {
             id: "notes",
@@ -4803,10 +4115,11 @@ exports.export = function(dest, destName, get) {
     };
 });
 
-},{}],"9OwLp":[function(require,module,exports,__globalThis) {
+
+var $64e7f54992ce4b7d$exports = {};
 !function(e, t) {
-    module.exports = t();
-}(this, function() {
+    $64e7f54992ce4b7d$exports = t();
+}($64e7f54992ce4b7d$exports, function() {
     "use strict";
     function e(e) {
         return e && e.__esModule && Object.prototype.hasOwnProperty.call(e, "default") ? e.default : e;
@@ -50149,7 +49462,7 @@ exports.export = function(dest, destName, get) {
     return ()=>Rs;
 });
 
-},{}],"lmKh2":[function(require,module,exports,__globalThis) {
+
 addEventListener('DOMContentLoaded', ()=>{
     const diveIn = document.querySelector('dive-in');
     const stackContainer = diveIn && diveIn.querySelector('stack-container');
@@ -50177,6 +49490,37 @@ addEventListener('DOMContentLoaded', ()=>{
     }
 });
 
-},{}]},["9WRFA","8JWvp"], "8JWvp", "parcelRequire4ccd")
 
-//# sourceMappingURL=talk-template.c6396971.js.map
+// reveal.js initialization
+const $ce2ab6a3784a12d8$var$slides = (0, $ef6d0cb1bf5eee6a$export$2e2bcd8739ae039)({
+    plugins: [
+        (0, (/*@__PURE__*/$parcel$interopDefault($d16eb09acf14544d$exports))),
+        (0, (/*@__PURE__*/$parcel$interopDefault($64e7f54992ce4b7d$exports)))
+    ],
+    // highlight.js options
+    highlight: {
+        highlightOnLoad: true,
+        tabReplace: '  '
+    },
+    navigationMode: 'linear',
+    ...window.location.href.includes('?print-pdf') && {
+        pdfSeparateFragments: false
+    },
+    hash: true,
+    // Flags if we should monitor the hash and change slides accordingly
+    respondToHashChanges: true,
+    // Push each slide change to the browser history.  Implies `hash: true`
+    history: true
+});
+// keyboard interaction configuration
+$ce2ab6a3784a12d8$var$slides.configure({
+    keyboard: {
+        8: 'prev',
+        // 27: null,
+        78: null
+    }
+});
+$ce2ab6a3784a12d8$var$slides.initialize();
+
+
+//# sourceMappingURL=introduction-to-accessibility.f6e7d026.js.map
