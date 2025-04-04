@@ -1,6 +1,6 @@
 {
   "name": "talk-template",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -20,10 +20,10 @@
     "../talks-libraries/packages/*"
   ],
   "dependencies": {
-    "reveal.js": "5.2.1",
     "@pixu-talks/core": "0.1.2",
     "@pixu-talks/fonts": "0.1.2",
-    "@pixu-talks/theme": "0.1.2"
+    "@pixu-talks/theme": "0.1.2",
+    "reveal.js": "5.2.1"
   },
   "devDependencies": {
     "@parcel/transformer-inline-string": "2.14.4",
