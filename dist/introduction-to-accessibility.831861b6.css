@@ -126,6 +126,46 @@
       }
     }
   }
+
+  @layer cascade {
+    [cascade] {
+      & ol {
+        counter-reset: item;
+        font-size: 1em;
+        line-height: 1.2;
+        list-style-type: none;
+
+        & ol {
+          font-size: .8em;
+        }
+
+        & li {
+          &:before {
+            content: counters(item, ".") ". ";
+            counter-increment: item;
+          }
+
+          & + li {
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+
+  @layer brand {
+    [brand] {
+      position: fixed;
+      inset: auto auto 3rem 3rem;
+
+      & img {
+        aspect-ratio: 1;
+        border: 2px #639;
+        border-radius: 2rem;
+        inline-size: 15rem;
+      }
+    }
+  }
 }
 
 @layer pixu-talk.iconography.draft-ui-icons {
@@ -15182,44 +15222,4 @@
     }
   }
 }
-
-@layer talk {
-  @layer cascade {
-    [cascade] {
-      & ol {
-        counter-reset: item;
-        font-size: 1em;
-        line-height: 1.2;
-        list-style-type: none;
-
-        & ol {
-          font-size: .8em;
-        }
-
-        & li {
-          &:before {
-            content: counters(item, ".") ". ";
-            counter-increment: item;
-          }
-
-          & + li {
-            margin: 0;
-          }
-        }
-      }
-    }
-  }
-}
-
-[brand] {
-  position: fixed;
-  inset: auto auto 3rem 3rem;
-
-  & img {
-    aspect-ratio: 1;
-    border: 2px #639;
-    border-radius: 2.5rem;
-    inline-size: 10rem;
-  }
-}
-/*# sourceMappingURL=introduction-to-accessibility.0b64c398.css.map */
+/*# sourceMappingURL=introduction-to-accessibility.831861b6.css.map */
